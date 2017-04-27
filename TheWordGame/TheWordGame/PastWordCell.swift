@@ -9,6 +9,7 @@
 import UIKit
 
 class PastWordCell: UITableViewCell {
+    @IBOutlet weak var wordLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

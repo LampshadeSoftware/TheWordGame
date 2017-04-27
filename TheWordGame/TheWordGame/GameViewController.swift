@@ -8,8 +8,9 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class GameViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // Outelts
+    @IBOutlet weak var pastWordsTableView: PastWordsTableView!
     
     // Actions
     
@@ -21,11 +22,36 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        test = ["one", "two", "three"]
+        self.pastWordsTableView.register(PastWordCell.self, forCellReuseIdentifier: "PastWordCell")
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    var test = [String]()
+    // Table View Stuff
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return test.count
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("test")
+        let cellIdentifier = "PastWordCell"
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? PastWordCell  else {
+            fatalError("The dequeued cell is not an instance of PastWordCell.")
+        }
+        
+        let word = test[indexPath.row]
+        print("Successfully displayed \(word)")
+        cell.wordLabel.text = word
+        cell.textLabel?.text = word
+        return cell
     }
 
 
