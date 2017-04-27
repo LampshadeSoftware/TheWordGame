@@ -13,7 +13,10 @@ class ViewController: UIViewController {
     
     // Actions
     
-    // Functions    
+    // Properties
+    var activeGame = WordGame()
+    
+    // Functions
 
     override func viewDidLoad() {
         super.viewDidLoad()
