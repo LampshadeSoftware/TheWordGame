@@ -17,6 +17,7 @@
 		CC3A4B5F1EB0F42000C5E2A5 /* Core in Resources */ = {isa = PBXBuildFile; fileRef = CC3A4B5E1EB0F42000C5E2A5 /* Core */; };
 		CCA6AA861EB26FB600B307D9 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA6AA841EB26FB600B307D9 /* GameViewController.swift */; };
 		CCA6AA871EB26FB600B307D9 /* PastWordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA6AA851EB26FB600B307D9 /* PastWordCell.swift */; };
+		CCA6AA891EB270FB00B307D9 /* PastWordsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA6AA881EB270FB00B307D9 /* PastWordsTableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		CC3A4B5E1EB0F42000C5E2A5 /* Core */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Core; sourceTree = "<group>"; };
 		CCA6AA841EB26FB600B307D9 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		CCA6AA851EB26FB600B307D9 /* PastWordCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastWordCell.swift; sourceTree = "<group>"; };
+		CCA6AA881EB270FB00B307D9 /* PastWordsTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastWordsTableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				CC3A4B391EB0F3F300C5E2A5 /* LaunchScreen.storyboard */,
 				CC3A4B3C1EB0F3F300C5E2A5 /* Info.plist */,
 				CC3A4B341EB0F3F300C5E2A5 /* TheWordGame.xcdatamodeld */,
+				CCA6AA881EB270FB00B307D9 /* PastWordsTableView.swift */,
 			);
 			path = TheWordGame;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 			files = (
 				CC3A4B361EB0F3F300C5E2A5 /* TheWordGame.xcdatamodeld in Sources */,
 				CCA6AA871EB26FB600B307D9 /* PastWordCell.swift in Sources */,
+				CCA6AA891EB270FB00B307D9 /* PastWordsTableView.swift in Sources */,
 				CCA6AA861EB26FB600B307D9 /* GameViewController.swift in Sources */,
 				CC3A4B2E1EB0F3F300C5E2A5 /* AppDelegate.swift in Sources */,
 			);
