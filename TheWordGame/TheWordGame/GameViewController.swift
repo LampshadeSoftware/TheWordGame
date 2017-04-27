@@ -24,6 +24,8 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Do any additional setup after loading the view, typically from a nib.
         test = ["one", "two", "three"]
         self.pastWordsTableView.register(PastWordCell.self, forCellReuseIdentifier: "PastWordCell")
+        pastWordsTableView.delegate = self
+        pastWordsTableView.dataSource = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,7 +51,6 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let word = test[indexPath.row]
         print("Successfully displayed \(word)")
-        cell.wordLabel.text = word
         cell.textLabel?.text = word
         return cell
     }
