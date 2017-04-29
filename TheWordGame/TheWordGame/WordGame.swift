@@ -22,7 +22,9 @@ class WordGame {
         lastWord = ""
         currentWord = WordGame.generateStartWord()
         usedWords = [String]()
-        usedWords.append(currentWord)
+        for _ in 1...6 {
+            usedWords.append("")
+        }
         errorLog = ""
     }
     
@@ -110,7 +112,7 @@ class WordGame {
         if !WordGame.isEnglishWord(play) {
             return 2
         }
-        if alreadyUsed(play) {
+        if play == word || alreadyUsed(play) {
             return 3
         }
         if doublePlay(play, last: last) {
@@ -246,9 +248,9 @@ class WordGame {
             errorLog = "fuck you"
             return
         case 6:
+            usedWords.append(currentWord)
             lastWord = currentWord
             currentWord = word
-            usedWords.append(word)
             errorLog = ""
         // _ = players.cycle()
         default:

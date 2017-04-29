@@ -21,10 +21,11 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         currentWordLabel.text = activeGame.currentWord
         pastWordsTableView.reloadData()
         scrollToBottom()
+        
     }
     func scrollToBottom(){
         DispatchQueue.global(qos: .background).async {
-            let indexPath = IndexPath(row: self.activeGame.usedWords.count-1, section: 0)
+            let indexPath = IndexPath(row: self.activeGame.usedWords.count - 1, section: 0)
             self.pastWordsTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
     }
@@ -61,11 +62,9 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
             fatalError("The dequeued cell is not an instance of PastWordCell.")
         }
         let word: String
-        if indexPath.row > 0 {
-            word = activeGame.usedWords[indexPath.row - 1]
-        } else {
-            word = ""
-        }
+        
+        word = activeGame.usedWords[indexPath.row]
+        
         cell.wordLabel!.text = word
         return cell
     }
