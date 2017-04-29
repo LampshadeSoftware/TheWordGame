@@ -11,8 +11,11 @@ import UIKit
 class GameViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // Outelts
     @IBOutlet weak var pastWordsTableView: PastWordsTableView!
+    @IBOutlet weak var currentWordLabel: UILabel!
     
     // Actions
+    @IBAction func submitButtonPressed(_ sender: Any) {
+    }
     
     // Properties
     var activeGame = WordGame()
@@ -22,7 +25,6 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        test = ["one", "two", "three"]
         pastWordsTableView.delegate = self
         pastWordsTableView.dataSource = self
     }
@@ -32,13 +34,12 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Dispose of any resources that can be recreated.
     }
     
-    var test = [String]()
     // Table View Stuff
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return test.count
+        return activeGame.usedWords.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "PastWordCell"
@@ -47,7 +48,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
             fatalError("The dequeued cell is not an instance of PastWordCell.")
         }
         
-        let word = test[indexPath.row]
+        let word = activeGame.usedWords.dropFirst()[indexPath.row]
         cell.wordLabel!.text = word
         return cell
     }

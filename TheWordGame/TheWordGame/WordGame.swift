@@ -11,7 +11,9 @@ import Foundation
 class WordGame {
     var players: Circuit<String>
     var lastWord, currentWord: String
-    var usedWords: Set<String>
+    var usedWords: [String]
+    var errorLog: String
+    
     static var dictionary = WordGame.generateDictionary()
     static var common = WordGame.generateCommons()
     
@@ -19,9 +21,9 @@ class WordGame {
         players = Circuit()
         lastWord = ""
         currentWord = WordGame.generateStartWord()
-        usedWords = Set<String>()
-        usedWords.insert(currentWord)
-        
+        usedWords = [String]()
+        usedWords.append(currentWord)
+        errorLog = ""
     }
     
     func addPlayer(_ name: String) {
@@ -222,6 +224,39 @@ class WordGame {
         return isValidPlay(play, on: word, last: "$$$") == 6
     }
     
+    func submitWord(_ word: String) {
+        let code = isValidPlay(word, on: currentWord, last: lastWord)
+        switch code {
+        case 0:
+            errorLog = "Invalid play! Try again"
+            return
+        case 1:
+            errorLog = "That's crap and you know it"
+            return
+        case 2:
+            errorLog = "Not an English word! Try again"
+            return
+        case 3:
+            errorLog = "\(word) has already been played! Try again"
+            return
+        case 4:
+            errorLog = "Double play! Try again"
+            return
+        case 5:
+            errorLog = "fuck you"
+            return
+        case 6:
+            lastWord = currentWord
+            currentWord = word
+            usedWords.append(word)
+            errorLog = ""
+        // _ = players.cycle()
+        default:
+            print("Something went wrong...")
+        }
+
+    }
+    
     static func getStrIndex(_ str: String, index i: Int) -> String.CharacterView.Index {
         return str.index(str.startIndex, offsetBy: i)
     }
@@ -254,7 +289,6 @@ class WordGame {
             print(error)
             return ["failed"]
         }
-
     }
 }
 
