@@ -9,11 +9,12 @@
 import UIKit
 
 class PastWordCell: UITableViewCell {
+    
     @IBOutlet weak var wordLabel: UILabel!
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        print("does this bullshit even do anything")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -21,5 +22,7 @@ class PastWordCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    
 
 }

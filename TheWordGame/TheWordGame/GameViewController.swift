@@ -23,7 +23,6 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         test = ["one", "two", "three"]
-        self.pastWordsTableView.register(PastWordCell.self, forCellReuseIdentifier: "PastWordCell")
         pastWordsTableView.delegate = self
         pastWordsTableView.dataSource = self
     }
@@ -42,7 +41,6 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         return test.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("test")
         let cellIdentifier = "PastWordCell"
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? PastWordCell  else {
@@ -50,8 +48,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         let word = test[indexPath.row]
-        print("Successfully displayed \(word)")
-        cell.textLabel?.text = word
+        cell.wordLabel!.text = word
         return cell
     }
 
