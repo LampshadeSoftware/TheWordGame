@@ -12,9 +12,21 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
     // Outelts
     @IBOutlet weak var pastWordsTableView: PastWordsTableView!
     @IBOutlet weak var currentWordLabel: UILabel!
+    @IBOutlet weak var inputTextField: UITextField!
     
     // Actions
     @IBAction func submitButtonPressed(_ sender: Any) {
+        activeGame.submitWord(inputTextField.text!)
+        inputTextField.text = ""
+        currentWordLabel.text = activeGame.currentWord
+        pastWordsTableView.reloadData()
+        scrollToBottom()
+    }
+    func scrollToBottom(){
+        DispatchQueue.global(qos: .background).async {
+            let indexPath = IndexPath(row: self.activeGame.usedWords.count-1, section: 0)
+            self.pastWordsTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }
     }
     
     // Properties
@@ -27,6 +39,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Do any additional setup after loading the view, typically from a nib.
         pastWordsTableView.delegate = self
         pastWordsTableView.dataSource = self
+        currentWordLabel.text = activeGame.currentWord
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,8 +60,12 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? PastWordCell  else {
             fatalError("The dequeued cell is not an instance of PastWordCell.")
         }
-        
-        let word = activeGame.usedWords.dropFirst()[indexPath.row]
+        let word: String
+        if indexPath.row > 0 {
+            word = activeGame.usedWords[indexPath.row - 1]
+        } else {
+            word = ""
+        }
         cell.wordLabel!.text = word
         return cell
     }

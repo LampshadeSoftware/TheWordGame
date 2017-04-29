@@ -14,7 +14,6 @@ class PastWordCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        print("does this bullshit even do anything")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
