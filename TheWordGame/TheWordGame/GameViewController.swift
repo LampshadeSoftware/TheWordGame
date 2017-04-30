@@ -37,12 +37,12 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let indexPath = IndexPath(row: self.activeGame.usedWords.count - 1, section: 0)
+
         // Do any additional setup after loading the view, typically from a nib.
         pastWordsTableView.delegate = self
         pastWordsTableView.dataSource = self
         pastWordsTableView.transform = CGAffineTransform (scaleX: 1,y: -1);
-        pastWordsTableView.cellForRow(at: indexPath) = CGAffineTransform (scaleX: 1,y: -1);
+
         currentWordLabel.text = activeGame.currentWord
     }
 

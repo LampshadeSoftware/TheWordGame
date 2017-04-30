@@ -22,9 +22,11 @@ class WordGame {
         lastWord = ""
         currentWord = WordGame.generateStartWord()
         usedWords = [String]()
+        /*
         for _ in 1...6 {
             usedWords.append("")
         }
+        */
         errorLog = ""
     }
     
