@@ -25,7 +25,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     func scrollToBottom(){
         DispatchQueue.global(qos: .background).async {
-            let indexPath = IndexPath(row: self.activeGame.usedWords.count - 1, section: 0)
+            let indexPath = IndexPath(row: 0, section: 0)
             self.pastWordsTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
     }
@@ -66,9 +66,10 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         let word: String
         
-        word = activeGame.usedWords[indexPath.row]
+        word = activeGame.usedWords[activeGame.usedWords.count - 1 - indexPath.row]
         
         cell.wordLabel!.text = word
+        cell.transform = CGAffineTransform (scaleX: 1,y: -1);
         return cell
     }
 
