@@ -13,14 +13,18 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var pastWordsTableView: PastWordsTableView!
     @IBOutlet weak var currentWordLabel: UILabel!
     @IBOutlet weak var inputTextField: UITextField!
+    @IBOutlet weak var errorLogLabel: UILabel!
     
     // Actions
     @IBAction func submitButtonPressed(_ sender: Any) {
         activeGame.submitWord(inputTextField.text!)
         inputTextField.text = ""
+        errorLogLabel.text = activeGame.errorLog
         currentWordLabel.text = activeGame.currentWord
         pastWordsTableView.reloadData()
-        scrollToBottom()
+        if activeGame.usedWords.count > 0 {
+            scrollToBottom()
+        }
         
     }
     func scrollToBottom(){
@@ -28,6 +32,16 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
             let indexPath = IndexPath(row: 0, section: 0)
             self.pastWordsTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
+    }
+    @IBAction func hintButtonPressed(_ sender: Any) {
+        
+    }
+    @IBAction func resetButtonPressed(_ sender: Any) {
+        activeGame = WordGame()
+        currentWordLabel.text = activeGame.currentWord
+        inputTextField.text = ""
+        errorLogLabel.text = ""
+        pastWordsTableView.reloadData()
     }
     
     // Properties
@@ -44,6 +58,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         pastWordsTableView.transform = CGAffineTransform (scaleX: 1,y: -1);
 
         currentWordLabel.text = activeGame.currentWord
+        errorLogLabel.text = ""
     }
 
     override func didReceiveMemoryWarning() {

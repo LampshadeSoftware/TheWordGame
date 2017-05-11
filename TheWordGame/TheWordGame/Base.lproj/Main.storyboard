@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QE2-4I-TlT" customClass="PastWordsTableView" customModule="TheWordGame" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="270"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="258"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.28231823444366455" green="0.28237283229827881" blue="0.28231483697891235" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" white="0.2187210648" alpha="1" colorSpace="calibratedWhite"/>
@@ -58,8 +58,25 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="currentWord" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yXm-8K-axF">
+                                <rect key="frame" x="8" y="262" width="359" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="24"/>
+                                <color key="textColor" red="1" green="0.81535078490000001" blue="0.2354753054" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fac-Tz-ggG">
+                                <rect key="frame" x="119" y="356" width="56" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="HINT">
+                                    <color key="titleColor" red="0.52516597600000003" green="1" blue="0.52584429669999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="hintButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LMV-2P-5ux"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iv0-VD-CME">
-                                <rect key="frame" x="159" y="356" width="56" height="30"/>
+                                <rect key="frame" x="203" y="356" width="56" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="SUBMIT">
                                     <color key="titleColor" red="0.71086861489999997" green="0.83657380520000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -68,11 +85,21 @@
                                     <action selector="submitButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="plX-Dh-ZWt"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="currentWord" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yXm-8K-axF">
-                                <rect key="frame" x="8" y="278" width="359" height="29"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s3d-tK-faA">
+                                <rect key="frame" x="313" y="28" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="24"/>
-                                <color key="textColor" red="1" green="0.81535078490000001" blue="0.2354753054" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="RESET">
+                                    <color key="titleColor" red="1" green="0.81535078490000001" blue="0.2354753054" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="resetButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7K2-Gx-Ifw"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="errorLog" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KW8-TE-xK4">
+                                <rect key="frame" x="0.0" y="291" width="375" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="1" green="0.53535542550000004" blue="0.46841492019999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -80,6 +107,7 @@
                     </view>
                     <connections>
                         <outlet property="currentWordLabel" destination="yXm-8K-axF" id="nZc-70-XhG"/>
+                        <outlet property="errorLogLabel" destination="KW8-TE-xK4" id="cd9-Kd-HN5"/>
                         <outlet property="inputTextField" destination="cBp-TC-IcL" id="Ddy-zU-VRh"/>
                         <outlet property="pastWordsTableView" destination="QE2-4I-TlT" id="g7I-f6-bYV"/>
                     </connections>
