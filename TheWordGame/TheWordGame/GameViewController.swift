@@ -61,12 +61,23 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     @IBAction func resetButtonPressed(_ sender: Any) {
-        activeGame = WordGame()
-        currentWordLabel.text = activeGame.currentWord
+        
         inputTextField.text = ""
         errorLogLabel.text = ""
         hintLogLabel.text = ""
+        streakLabel.text = "Streak: 0"
+        currentWordLabel.text = ""
+        activeGame.usedWords = [""]
         pastWordsTableView.reloadData()
+        hintActivityIndicator.isHidden = false
+        hintActivityIndicator.startAnimating()
+        DispatchQueue.main.async {
+            self.activeGame = WordGame()
+            self.hintActivityIndicator.stopAnimating()
+            self.hintActivityIndicator.isHidden = true
+            self.currentWordLabel.text = self.activeGame.currentWord
+        }
+        
     }
     
     // Properties
