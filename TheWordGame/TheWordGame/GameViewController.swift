@@ -36,7 +36,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.pastWordsTableView.reloadData()
         }
         if activeGame.usedWords.count > 0 {
-            scrollToBottom()
+            // scrollToBottom()
         }
 
     }
@@ -61,7 +61,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     @IBAction func resetButtonPressed(_ sender: Any) {
-        
+
         inputTextField.text = ""
         errorLogLabel.text = ""
         hintLogLabel.text = ""
@@ -71,7 +71,8 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         pastWordsTableView.reloadData()
         hintActivityIndicator.isHidden = false
         hintActivityIndicator.startAnimating()
-        DispatchQueue.main.async {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             self.activeGame = WordGame()
             self.hintActivityIndicator.stopAnimating()
             self.hintActivityIndicator.isHidden = true
@@ -122,7 +123,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         let word: String
         
         word = activeGame.usedWords[activeGame.usedWords.count - 1 - indexPath.row]
-        
+    
         cell.wordLabel!.text = word
         cell.transform = CGAffineTransform (scaleX: 1,y: -1);
         return cell
