@@ -14,11 +14,14 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var currentWordLabel: UILabel!
     @IBOutlet weak var inputTextField: UITextField!
     @IBOutlet weak var errorLogLabel: UILabel!
+    @IBOutlet weak var hintLogLabel: UILabel!
+    @IBOutlet weak var hintActivityIndicator: UIActivityIndicatorView!
     
     // Actions
     @IBAction func submitButtonPressed(_ sender: Any) {
         activeGame.submitWord(inputTextField.text!)
         inputTextField.text = ""
+        hintLogLabel.text = ""
         errorLogLabel.text = activeGame.errorLog
         currentWordLabel.text = activeGame.currentWord
         pastWordsTableView.reloadData()
@@ -34,6 +37,17 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     @IBAction func hintButtonPressed(_ sender: Any) {
+        errorLogLabel.text = ""
+        hintLogLabel.text = ""
+        hintActivityIndicator.isHidden = false
+        hintActivityIndicator.startAnimating()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+            let tmp = "There are " + String(self.activeGame.numGamePlays(on: self.activeGame.currentWord)) + " potential plays on " + self.activeGame.currentWord
+            self.hintLogLabel.text = tmp
+            self.hintActivityIndicator.stopAnimating()
+            self.hintActivityIndicator.isHidden = true
+        }
         
     }
     @IBAction func resetButtonPressed(_ sender: Any) {
@@ -41,6 +55,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         currentWordLabel.text = activeGame.currentWord
         inputTextField.text = ""
         errorLogLabel.text = ""
+        hintLogLabel.text = ""
         pastWordsTableView.reloadData()
     }
     
@@ -59,6 +74,8 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         currentWordLabel.text = activeGame.currentWord
         errorLogLabel.text = ""
+        hintLogLabel.text = ""
+        hintActivityIndicator.isHidden = true
     }
 
     override func didReceiveMemoryWarning() {
