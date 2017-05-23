@@ -16,19 +16,29 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var errorLogLabel: UILabel!
     @IBOutlet weak var hintLogLabel: UILabel!
     @IBOutlet weak var hintActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var streakLabel: UILabel!
     
     // Actions
     @IBAction func submitButtonPressed(_ sender: Any) {
+        submit()
+    }
+    @IBAction func returnKeyPressed(_ sender: Any) {
+        submit()
+    }
+    func submit() {
         activeGame.submitWord(inputTextField.text!)
         inputTextField.text = ""
         hintLogLabel.text = ""
         errorLogLabel.text = activeGame.errorLog
         currentWordLabel.text = activeGame.currentWord
-        pastWordsTableView.reloadData()
+        streakLabel.text = "Streak: \(activeGame.usedWords.count)"
+        DispatchQueue.main.async {
+            self.pastWordsTableView.reloadData()
+        }
         if activeGame.usedWords.count > 0 {
             scrollToBottom()
         }
-        
+
     }
     func scrollToBottom(){
         DispatchQueue.global(qos: .background).async {
@@ -76,6 +86,8 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         errorLogLabel.text = ""
         hintLogLabel.text = ""
         hintActivityIndicator.isHidden = true
+        
+        inputTextField.becomeFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {
