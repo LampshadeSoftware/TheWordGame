@@ -107,6 +107,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Dispose of any resources that can be recreated.
     }
     
+    
     // Table View Stuff
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
