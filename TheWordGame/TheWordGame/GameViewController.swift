@@ -36,11 +36,17 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.pastWordsTableView.reloadData()
         }
         if activeGame.usedWords.count > 0 {
-            // scrollToBottom()
+            scrollToBottom()
         }
 
     }
-    func scrollToBottom(){
+    func preScroll() {
+        DispatchQueue.global(qos: .background).async {
+            let indexPath = IndexPath(row: 1, section: 0)
+            self.pastWordsTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+        }
+    }
+    func scrollToBottom() {
         DispatchQueue.global(qos: .background).async {
             let indexPath = IndexPath(row: 0, section: 0)
             self.pastWordsTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
