@@ -67,13 +67,18 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     @IBAction func resetButtonPressed(_ sender: Any) {
-
+        reset()
+    }
+    
+    func reset() {
         inputTextField.text = ""
         errorLogLabel.text = ""
         hintLogLabel.text = ""
         streakLabel.text = "Streak: 0"
         currentWordLabel.text = ""
-        activeGame.usedWords = [""]
+        if activeGame != nil {
+            activeGame.usedWords = [""]
+        }
         pastWordsTableView.reloadData()
         hintActivityIndicator.isHidden = false
         hintActivityIndicator.startAnimating()
@@ -84,11 +89,10 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.hintActivityIndicator.isHidden = true
             self.currentWordLabel.text = self.activeGame.currentWord
         }
-        
     }
     
     // Properties
-    var activeGame = WordGame()
+    var activeGame: WordGame!
     
     // Functions
 
@@ -100,12 +104,16 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         pastWordsTableView.dataSource = self
         pastWordsTableView.transform = CGAffineTransform (scaleX: 1,y: -1);
 
-        currentWordLabel.text = activeGame.currentWord
+        currentWordLabel.text = ""
         errorLogLabel.text = ""
         hintLogLabel.text = ""
-        hintActivityIndicator.isHidden = true
+        hintActivityIndicator.isHidden = false
         
         inputTextField.becomeFirstResponder()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        reset()
     }
 
     override func didReceiveMemoryWarning() {
@@ -119,7 +127,10 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return activeGame.usedWords.count
+        if activeGame != nil {
+            return activeGame.usedWords.count
+        }
+        return 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "PastWordCell"

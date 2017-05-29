@@ -180,7 +180,7 @@ class TimeGameViewController: UIViewController, UITableViewDelegate, UITableView
     // Properties
     var activeGame: WordGame!
     var timer: Timer!
-    let timeLimit = 10
+    let timeLimit = 59
     var timeValue: Int!
     var gameInProgress = false
     
