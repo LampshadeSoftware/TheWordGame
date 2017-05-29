@@ -16,9 +16,50 @@ class TimeGameViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var errorLogLabel: UILabel!
     @IBOutlet weak var hintLogLabel: UILabel!
     @IBOutlet weak var hintActivityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var streakLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var startButton: UIButton!
     
     // Actions
+    @IBAction func startButtonPressed(_ sender: Any) {
+        startButton.isEnabled = false
+        startButton.isHidden = true
+        timeLabel.text = "3"
+        timeValue = 59
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countDown), userInfo: nil, repeats: true)
+    }
+    
+    func countDown() {
+        if timeLabel.text == "3" {
+            timeLabel.text = "2"
+        } else if timeLabel.text == "2" {
+            timeLabel.text = "1"
+        } else if timeLabel.text == "1" {
+            timeLabel.text = "GO"
+            currentWordLabel.text = activeGame.currentWord
+            timer.invalidate()
+            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+        }
+    }
+    func updateTimer() {
+        timeLabel.text = "0:\(timeValue!)"
+        if timeValue == 0 {
+            timer.invalidate()
+            finishGame()
+        }
+        timeValue = timeValue - 1
+    }
+    func finishGame() {
+        startButton.setTitle("SCORE: \(activeGame.usedWords.count)", for: .normal)
+        startButton.isHidden = false
+        inputTextField.text = ""
+        errorLogLabel.text = ""
+        hintLogLabel.text = ""
+        timeLabel.text = ""
+        currentWordLabel.text = ""
+        activeGame.usedWords = [""]
+        pastWordsTableView.reloadData()
+    }
+    
     @IBAction func submitButtonPressed(_ sender: Any) {
         submit()
     }
@@ -31,7 +72,7 @@ class TimeGameViewController: UIViewController, UITableViewDelegate, UITableView
         hintLogLabel.text = ""
         errorLogLabel.text = activeGame.errorLog
         currentWordLabel.text = activeGame.currentWord
-        streakLabel.text = "Streak: \(activeGame.usedWords.count)"
+
         DispatchQueue.main.async {
             self.pastWordsTableView.reloadData()
         }
@@ -68,10 +109,13 @@ class TimeGameViewController: UIViewController, UITableViewDelegate, UITableView
     }
     @IBAction func resetButtonPressed(_ sender: Any) {
         
+        startButton.isEnabled = true
+        startButton.setTitle("START", for: .normal)
+        
         inputTextField.text = ""
         errorLogLabel.text = ""
         hintLogLabel.text = ""
-        streakLabel.text = "Streak: 0"
+        timeLabel.text = ""
         currentWordLabel.text = ""
         activeGame.usedWords = [""]
         pastWordsTableView.reloadData()
@@ -82,13 +126,15 @@ class TimeGameViewController: UIViewController, UITableViewDelegate, UITableView
             self.activeGame = WordGame()
             self.hintActivityIndicator.stopAnimating()
             self.hintActivityIndicator.isHidden = true
-            self.currentWordLabel.text = self.activeGame.currentWord
+            self.currentWordLabel.text = ""
         }
         
     }
     
     // Properties
     var activeGame = WordGame()
+    var timer: Timer!
+    var timeValue: Int!
     
     // Functions
     
@@ -100,10 +146,12 @@ class TimeGameViewController: UIViewController, UITableViewDelegate, UITableView
         pastWordsTableView.dataSource = self
         pastWordsTableView.transform = CGAffineTransform (scaleX: 1,y: -1);
         
-        currentWordLabel.text = activeGame.currentWord
+        currentWordLabel.text = ""
         errorLogLabel.text = ""
         hintLogLabel.text = ""
         hintActivityIndicator.isHidden = true
+        
+        timeLabel.text = ""
         
         inputTextField.becomeFirstResponder()
     }
