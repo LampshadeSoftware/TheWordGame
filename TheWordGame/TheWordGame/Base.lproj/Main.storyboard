@@ -370,6 +370,13 @@
                                     <action selector="startButtonPressed:" destination="QS0-xY-Gbb" eventType="touchUpInside" id="HVe-Nm-xwc"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="information" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rPE-M9-R9E">
+                                <rect key="frame" x="42" y="256" width="290" height="73"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans-Light" family="Gill Sans" pointSize="64"/>
+                                <color key="textColor" red="0.71086861489999997" green="0.83657380520000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.13174012369999999" green="0.15503615470000001" blue="0.1853227459" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -377,10 +384,13 @@
                         <outlet property="currentWordLabel" destination="TUK-vI-pjc" id="JRo-Nh-H7i"/>
                         <outlet property="errorLogLabel" destination="kq2-dF-U5n" id="ZQR-QW-9eA"/>
                         <outlet property="hintActivityIndicator" destination="117-dO-rGT" id="UQM-BK-CIW"/>
+                        <outlet property="hintButton" destination="IpC-nf-iA9" id="4Sx-8F-agX"/>
                         <outlet property="hintLogLabel" destination="2bb-0p-OS1" id="rXf-6r-C3K"/>
+                        <outlet property="infoLabel" destination="rPE-M9-R9E" id="YLT-vp-5Nx"/>
                         <outlet property="inputTextField" destination="c7F-HX-Svi" id="eXp-pt-bHN"/>
                         <outlet property="pastWordsTableView" destination="LGX-Dx-srN" id="FbY-JD-p7N"/>
                         <outlet property="startButton" destination="gVf-Kl-E1e" id="Qey-TJ-erH"/>
+                        <outlet property="submitButton" destination="DKg-ND-VRn" id="cPl-YI-mYs"/>
                         <outlet property="timeLabel" destination="lnQ-oT-AB4" id="9Ul-Bq-sIM"/>
                     </connections>
                 </viewController>

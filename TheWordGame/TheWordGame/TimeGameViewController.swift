@@ -17,40 +17,62 @@ class TimeGameViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var hintLogLabel: UILabel!
     @IBOutlet weak var hintActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var startButton: UIButton!
+    @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var hintButton: UIButton!
     
     // Actions
     @IBAction func startButtonPressed(_ sender: Any) {
         startButton.isEnabled = false
         startButton.isHidden = true
-        timeLabel.text = "3"
-        timeValue = 59
+        infoLabel.text = "3"
+        timeValue = timeLimit
+        updateTimer()
+        
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countDown), userInfo: nil, repeats: true)
     }
     
     func countDown() {
-        if timeLabel.text == "3" {
-            timeLabel.text = "2"
-        } else if timeLabel.text == "2" {
-            timeLabel.text = "1"
-        } else if timeLabel.text == "1" {
-            timeLabel.text = "GO"
-            currentWordLabel.text = activeGame.currentWord
+        if infoLabel.text == "3" {
+            infoLabel.text = "2"
+        } else if infoLabel.text == "2" {
+            infoLabel.text = "1"
+        } else if infoLabel.text == "1" {
+            infoLabel.text = ""
+            startGame()
             timer.invalidate()
             timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
         }
     }
     func updateTimer() {
-        timeLabel.text = "0:\(timeValue!)"
+        var displayVal = "\(timeValue!)"
+        if timeValue < 10 {
+            displayVal = "0\(timeValue!)"
+        }
+        timeLabel.text = "0:\(displayVal)"
         if timeValue == 0 {
+            infoLabel.text = "SCORE: \(activeGame.usedWords.count)"
             timer.invalidate()
             finishGame()
         }
         timeValue = timeValue - 1
     }
+    
+    func startGame() {
+        gameInProgress = true
+        
+        currentWordLabel.text = activeGame.currentWord
+        hintButton.isEnabled = true
+        hintButton.isHidden = false
+        
+        submitButton.isEnabled = true
+        submitButton.isHidden = false
+    }
+    
     func finishGame() {
-        startButton.setTitle("SCORE: \(activeGame.usedWords.count)", for: .normal)
-        startButton.isHidden = false
+        gameInProgress = false
+        
         inputTextField.text = ""
         errorLogLabel.text = ""
         hintLogLabel.text = ""
@@ -58,13 +80,22 @@ class TimeGameViewController: UIViewController, UITableViewDelegate, UITableView
         currentWordLabel.text = ""
         activeGame.usedWords = [""]
         pastWordsTableView.reloadData()
+        
+        hintButton.isEnabled = false
+        hintButton.isHidden = true
+        
+        submitButton.isEnabled = false
+        submitButton.isHidden = true
+        
     }
     
     @IBAction func submitButtonPressed(_ sender: Any) {
         submit()
     }
     @IBAction func returnKeyPressed(_ sender: Any) {
-        submit()
+        if gameInProgress {
+            submit()
+        }
     }
     func submit() {
         activeGame.submitWord(inputTextField.text!)
@@ -77,7 +108,7 @@ class TimeGameViewController: UIViewController, UITableViewDelegate, UITableView
             self.pastWordsTableView.reloadData()
         }
         if activeGame.usedWords.count > 0 {
-            scrollToBottom()
+            // scrollToBottom()
         }
         
     }
@@ -108,16 +139,29 @@ class TimeGameViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     @IBAction func resetButtonPressed(_ sender: Any) {
+        reset()
+    }
+    
+    func reset() {
+        if timer != nil {
+            timer.invalidate()
+        }
+        infoLabel.text = ""
+        hintButton.isHidden = true
+        hintButton.isEnabled = false
+        submitButton.isHidden = true
+        submitButton.isEnabled = false
         
-        startButton.isEnabled = true
-        startButton.setTitle("START", for: .normal)
+        timeLabel.text = ""
         
         inputTextField.text = ""
         errorLogLabel.text = ""
         hintLogLabel.text = ""
         timeLabel.text = ""
         currentWordLabel.text = ""
-        activeGame.usedWords = [""]
+        if activeGame != nil {
+            activeGame.usedWords = [""]
+        }
         pastWordsTableView.reloadData()
         hintActivityIndicator.isHidden = false
         hintActivityIndicator.startAnimating()
@@ -127,14 +171,18 @@ class TimeGameViewController: UIViewController, UITableViewDelegate, UITableView
             self.hintActivityIndicator.stopAnimating()
             self.hintActivityIndicator.isHidden = true
             self.currentWordLabel.text = ""
+            self.startButton.isEnabled = true
+            self.startButton.isHidden = false
         }
-        
+
     }
     
     // Properties
-    var activeGame = WordGame()
+    var activeGame: WordGame!
     var timer: Timer!
+    let timeLimit = 10
     var timeValue: Int!
+    var gameInProgress = false
     
     // Functions
     
@@ -146,14 +194,28 @@ class TimeGameViewController: UIViewController, UITableViewDelegate, UITableView
         pastWordsTableView.dataSource = self
         pastWordsTableView.transform = CGAffineTransform (scaleX: 1,y: -1);
         
-        currentWordLabel.text = ""
-        errorLogLabel.text = ""
-        hintLogLabel.text = ""
-        hintActivityIndicator.isHidden = true
+        inputTextField.becomeFirstResponder()
+        
+        infoLabel.text = ""
+        hintButton.isHidden = true
+        hintButton.isEnabled = false
+        submitButton.isHidden = true
+        submitButton.isEnabled = false
+        startButton.isHidden = true
+        startButton.isEnabled = false
         
         timeLabel.text = ""
         
-        inputTextField.becomeFirstResponder()
+        inputTextField.text = ""
+        errorLogLabel.text = ""
+        hintLogLabel.text = ""
+        timeLabel.text = ""
+        currentWordLabel.text = ""
+    
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        reset()
     }
     
     override func didReceiveMemoryWarning() {
@@ -167,7 +229,10 @@ class TimeGameViewController: UIViewController, UITableViewDelegate, UITableView
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return activeGame.usedWords.count
+        if activeGame != nil {
+            return activeGame.usedWords.count
+        }
+        return 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "PastWordCell"
