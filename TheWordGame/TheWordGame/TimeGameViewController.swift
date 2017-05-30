@@ -9,30 +9,76 @@
 import UIKit
 
 class TimeGameViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
-
-    @IBOutlet weak var pastWordsTableView: PastWordsTableView!
+    
+    // Outlets
+    // ---------
+    // Labels
     @IBOutlet weak var currentWordLabel: UILabel!
-    @IBOutlet weak var inputTextField: UITextField!
     @IBOutlet weak var errorLogLabel: UILabel!
     @IBOutlet weak var hintLogLabel: UILabel!
-    @IBOutlet weak var hintActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var infoLabel: UILabel!
+    
+    // Buttons
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var hintButton: UIButton!
     
+    // Misc
+    @IBOutlet weak var pastWordsTableView: PastWordsTableView!
+    @IBOutlet weak var inputTextField: UITextField!
+    @IBOutlet weak var hintActivityIndicator: UIActivityIndicatorView!
+    
+    // ===============
+    
     // Actions
+    // --------
+    // Buttons
     @IBAction func startButtonPressed(_ sender: Any) {
+        // Remove start button
         startButton.isEnabled = false
         startButton.isHidden = true
+        
+        // Display countdown
         infoLabel.text = "3"
         timeValue = timeLimit
         updateTimer()
         
+        // Start timer
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countDown), userInfo: nil, repeats: true)
     }
     
+    @IBAction func hintButtonPressed(_ sender: Any) {
+        // Clear error and hint
+        errorLogLabel.text = ""
+        hintLogLabel.text = ""
+        
+        // Show activity indicator
+        hintActivityIndicator.isHidden = false
+        hintActivityIndicator.startAnimating()
+        
+        // Start new thread to find number of plays
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+            let tmp = "There are " + String(self.activeGame.numGamePlays(on: self.activeGame.currentWord)) + " potential plays on " + self.activeGame.currentWord
+            self.hintLogLabel.text = tmp
+            self.hintActivityIndicator.stopAnimating()
+            self.hintActivityIndicator.isHidden = true
+        }
+        
+    }
+    @IBAction func resetButtonPressed(_ sender: Any) {
+        reset()
+    }
+    @IBAction func submitButtonPressed(_ sender: Any) {
+        submit()
+    }
+    @IBAction func returnKeyPressed(_ sender: Any) {
+        if gameInProgress {
+            submit()
+        }
+    }
+    
+    // Aux Functions
     func countDown() {
         if infoLabel.text == "3" {
             infoLabel.text = "2"
@@ -89,14 +135,7 @@ class TimeGameViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
-    @IBAction func submitButtonPressed(_ sender: Any) {
-        submit()
-    }
-    @IBAction func returnKeyPressed(_ sender: Any) {
-        if gameInProgress {
-            submit()
-        }
-    }
+    
     func submit() {
         activeGame.submitWord(inputTextField.text!)
         inputTextField.text = ""
@@ -124,23 +163,7 @@ class TimeGameViewController: UIViewController, UITableViewDelegate, UITableView
             self.pastWordsTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
     }
-    @IBAction func hintButtonPressed(_ sender: Any) {
-        errorLogLabel.text = ""
-        hintLogLabel.text = ""
-        hintActivityIndicator.isHidden = false
-        hintActivityIndicator.startAnimating()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-            let tmp = "There are " + String(self.activeGame.numGamePlays(on: self.activeGame.currentWord)) + " potential plays on " + self.activeGame.currentWord
-            self.hintLogLabel.text = tmp
-            self.hintActivityIndicator.stopAnimating()
-            self.hintActivityIndicator.isHidden = true
-        }
-        
-    }
-    @IBAction func resetButtonPressed(_ sender: Any) {
-        reset()
-    }
+    
     
     func reset() {
         if timer != nil {
@@ -184,7 +207,7 @@ class TimeGameViewController: UIViewController, UITableViewDelegate, UITableView
     var timeValue: Int!
     var gameInProgress = false
     
-    // Functions
+    // Override Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
