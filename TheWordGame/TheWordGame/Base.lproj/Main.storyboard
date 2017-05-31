@@ -240,8 +240,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Streak: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lnQ-oT-AB4">
-                                        <rect key="frame" x="127" y="22" width="120" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lnQ-oT-AB4">
+                                        <rect key="frame" x="127" y="22" width="120" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="GillSans-Light" family="Gill Sans" pointSize="22"/>
                                         <color key="textColor" red="0.13174012369999999" green="0.15503615470000001" blue="0.1853227459" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -359,6 +359,24 @@
                                 <rect key="frame" x="177" y="335" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVf-Kl-E1e">
+                                <rect key="frame" x="0.0" y="250" width="375" height="85"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans-Light" family="Gill Sans" pointSize="64"/>
+                                <state key="normal" title="START">
+                                    <color key="titleColor" red="0.52516597600000003" green="1" blue="0.52584429669999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="startButtonPressed:" destination="QS0-xY-Gbb" eventType="touchUpInside" id="HVe-Nm-xwc"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="information" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rPE-M9-R9E">
+                                <rect key="frame" x="42" y="256" width="290" height="73"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans-Light" family="Gill Sans" pointSize="64"/>
+                                <color key="textColor" red="0.71086861489999997" green="0.83657380520000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.13174012369999999" green="0.15503615470000001" blue="0.1853227459" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -366,15 +384,19 @@
                         <outlet property="currentWordLabel" destination="TUK-vI-pjc" id="JRo-Nh-H7i"/>
                         <outlet property="errorLogLabel" destination="kq2-dF-U5n" id="ZQR-QW-9eA"/>
                         <outlet property="hintActivityIndicator" destination="117-dO-rGT" id="UQM-BK-CIW"/>
+                        <outlet property="hintButton" destination="IpC-nf-iA9" id="4Sx-8F-agX"/>
                         <outlet property="hintLogLabel" destination="2bb-0p-OS1" id="rXf-6r-C3K"/>
+                        <outlet property="infoLabel" destination="rPE-M9-R9E" id="YLT-vp-5Nx"/>
                         <outlet property="inputTextField" destination="c7F-HX-Svi" id="eXp-pt-bHN"/>
                         <outlet property="pastWordsTableView" destination="LGX-Dx-srN" id="FbY-JD-p7N"/>
-                        <outlet property="streakLabel" destination="lnQ-oT-AB4" id="GyW-7J-1NC"/>
+                        <outlet property="startButton" destination="gVf-Kl-E1e" id="Qey-TJ-erH"/>
+                        <outlet property="submitButton" destination="DKg-ND-VRn" id="cPl-YI-mYs"/>
+                        <outlet property="timeLabel" destination="lnQ-oT-AB4" id="9Ul-Bq-sIM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cd2-aO-1AQ" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="30" y="500"/>
+            <point key="canvasLocation" x="29.600000000000001" y="499.70014992503752"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
