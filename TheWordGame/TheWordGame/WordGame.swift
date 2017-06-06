@@ -149,7 +149,7 @@ class WordGame: NSObject, NSCoding {
         if doublePlay(play, last: last) {
             return 4
         }
-        if play == "fjord" {
+        if play == "fjord" || play == "fiord" {
             return 5
         }
         return 6
