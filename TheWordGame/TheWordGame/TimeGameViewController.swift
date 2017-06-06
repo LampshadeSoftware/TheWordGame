@@ -119,6 +119,7 @@ class TimeGameViewController: UIViewController, UITableViewDelegate, UITableView
     func finishGame() {
         gameInProgress = false
         
+        // Clear game information
         inputTextField.text = ""
         errorLogLabel.text = ""
         hintLogLabel.text = ""

@@ -36,7 +36,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.pastWordsTableView.reloadData()
         }
         if activeGame.usedWords.count > 0 {
-            scrollToBottom()
+            // scrollToBottom()
         }
 
     }
@@ -85,6 +85,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             self.activeGame = WordGame()
+            Save.setToken(tokenKey: "active", newVal: self.activeGame)
             self.hintActivityIndicator.stopAnimating()
             self.hintActivityIndicator.isHidden = true
             self.currentWordLabel.text = self.activeGame.currentWord
@@ -103,17 +104,29 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         pastWordsTableView.delegate = self
         pastWordsTableView.dataSource = self
         pastWordsTableView.transform = CGAffineTransform (scaleX: 1,y: -1);
-
-        currentWordLabel.text = ""
+        
+        if let gameToken = Save.getToken(tokenKey: "active") as! WordGame! {
+            activeGame = gameToken
+            currentWordLabel.text = activeGame.currentWord
+        } else {
+            currentWordLabel.text = ""
+            
+        }
+        hintLogLabel.isHidden = true
         errorLogLabel.text = ""
         hintLogLabel.text = ""
-        hintActivityIndicator.isHidden = false
+        
+        
         
         inputTextField.becomeFirstResponder()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        reset()
+        if activeGame == nil {
+            reset()
+        } else {
+            print("caught the game")
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -146,7 +159,9 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.transform = CGAffineTransform (scaleX: 1,y: -1);
         return cell
     }
-
+    
+    // Save functions
+    
 
 }
 
