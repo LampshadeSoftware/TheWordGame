@@ -54,7 +54,6 @@ class TimeGameViewController: UIViewController, UITableViewDelegate, UITableView
         hintLogLabel.text = ""
         
         // Show activity indicator
-        hintActivityIndicator.isHidden = false
         hintActivityIndicator.startAnimating()
         
         // Start new thread to find number of plays
@@ -62,7 +61,6 @@ class TimeGameViewController: UIViewController, UITableViewDelegate, UITableView
             let tmp = "There are " + String(self.activeGame.numGamePlays(on: self.activeGame.currentWord)) + " potential plays on " + self.activeGame.currentWord
             self.hintLogLabel.text = tmp
             self.hintActivityIndicator.stopAnimating()
-            self.hintActivityIndicator.isHidden = true
         }
         
     }
@@ -187,13 +185,11 @@ class TimeGameViewController: UIViewController, UITableViewDelegate, UITableView
             activeGame.usedWords = [""]
         }
         pastWordsTableView.reloadData()
-        hintActivityIndicator.isHidden = false
         hintActivityIndicator.startAnimating()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             self.activeGame = WordGame()
             self.hintActivityIndicator.stopAnimating()
-            self.hintActivityIndicator.isHidden = true
             self.currentWordLabel.text = ""
             self.startButton.isEnabled = true
             self.startButton.isHidden = false

@@ -9,20 +9,20 @@
 import Foundation
 
 class Save: NSObject, NSCoding {
-    private var tokens: [String: AnyObject?]
+    private var tokens: [String: NSObject]
     
     func encode(with aCoder: NSCoder) {
         aCoder.encode(tokens, forKey: "tokens")
     }
     override init() {
-        tokens = [String: AnyObject!]()
+        tokens = [String: NSObject]()
     }
-    init(tokens: [String: AnyObject?]) {
+    init(tokens: [String: NSObject]) {
         self.tokens = tokens
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
-        guard let tokens = aDecoder.decodeObject(forKey: "tokens") as? [String: AnyObject]
+        guard let tokens = aDecoder.decodeObject(forKey: "tokens") as? [String: NSObject]
         else {
             print("Unable to decode Save object")
             return nil
@@ -37,7 +37,7 @@ class Save: NSObject, NSCoding {
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("data")
     
-    private static func updateSaves() {
+    static func writeSaveData() {
         let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(Save.data, toFile: Save.ArchiveURL.path)
         if isSuccessfulSave {
             print("Data successfully saved.")
@@ -45,21 +45,30 @@ class Save: NSObject, NSCoding {
             print("Failed to save data...")
         }
     }
-    private static func loadSaves() {
-        data = NSKeyedUnarchiver.unarchiveObject(withFile: Save.ArchiveURL.path) as! Save
+    
+    static func loadSaveData() {
+        let onDisk = NSKeyedUnarchiver.unarchiveObject(withFile: Save.ArchiveURL.path) as! Save?
+        if onDisk != nil {
+            data = onDisk!
+        }
     }
     
-    static func setToken(tokenKey: String, newVal: AnyObject) {
+    static func setToken(tokenKey: String, newVal: NSObject) {
         data.tokens[tokenKey] = newVal
     }
     
-    static func getToken(tokenKey: String) -> AnyObject! {
+    static func getToken(tokenKey: String) -> NSObject? {
         let val = data.tokens[tokenKey]
         if val == nil {
             return nil
         } else {
             return val!
         }
+    }
+    
+    static func resetData() {
+        data = Save()
+        writeSaveData()
     }
 }
 

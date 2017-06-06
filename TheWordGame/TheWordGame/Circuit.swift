@@ -8,11 +8,11 @@
 
 import Foundation
 
-class Circuit<Element> {
+class Circuit<Element>: NSObject {
     
     fileprivate var current: Node<Element>?
     fileprivate var size: Int
-    init() {
+    override init() {
         current = nil
         size = 0
     }

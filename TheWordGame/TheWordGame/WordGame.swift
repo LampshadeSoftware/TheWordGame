@@ -8,7 +8,7 @@
 
 import Foundation
 
-class WordGame {
+class WordGame: NSObject, NSCoding {
     var players: Circuit<String>
     var lastWord, currentWord: String
     var usedWords: [String]
@@ -17,17 +17,46 @@ class WordGame {
     static var dictionary = WordGame.generateDictionary()
     static var common = WordGame.generateCommons()
     
-    init() {
+    override init() {
         players = Circuit()
         lastWord = ""
         currentWord = WordGame.generateStartWord()
         usedWords = [String]()
-        /*
-        for _ in 1...6 {
-            usedWords.append("")
-        }
-        */
         errorLog = ""
+    }
+    init(lastWord: String, currentWord: String, usedWords: [String]) {
+        players = Circuit()
+        self.lastWord = lastWord
+        self.currentWord = currentWord
+        self.usedWords = usedWords
+        errorLog = ""
+    }
+    
+    // Decode
+    required convenience init?(coder aDecoder: NSCoder) {
+        guard let _lastWord = aDecoder.decodeObject(forKey: "lastWord") as? String
+        else {
+            print("Unable to decode lastWord")
+            return nil
+        }
+        guard let _currentWord = aDecoder.decodeObject(forKey: "currentWord") as? String
+            else {
+                print("Unable to decode currentWord")
+                return nil
+        }
+        guard let _usedWords = aDecoder.decodeObject(forKey: "usedWords") as? [String]
+            else {
+                print("Unable to decode usedWords")
+                return nil
+        }
+        self.init(lastWord: _lastWord, currentWord: _currentWord, usedWords: _usedWords)
+    }
+    
+    // Encode
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(lastWord, forKey: "lastWord")
+        aCoder.encode(currentWord, forKey: "currentWord")
+        aCoder.encode(usedWords, forKey: "usedWords")
     }
     
     func addPlayer(_ name: String) {
