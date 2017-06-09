@@ -36,7 +36,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.pastWordsTableView.reloadData()
         }
         if activeGame.usedWords.count > 0 {
-            scrollToBottom()
+            // scrollToBottom()
         }
 
     }
@@ -55,14 +55,13 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func hintButtonPressed(_ sender: Any) {
         errorLogLabel.text = ""
         hintLogLabel.text = ""
-        hintActivityIndicator.isHidden = false
+        
         hintActivityIndicator.startAnimating()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             let tmp = "There are " + String(self.activeGame.numGamePlays(on: self.activeGame.currentWord)) + " potential plays on " + self.activeGame.currentWord
             self.hintLogLabel.text = tmp
             self.hintActivityIndicator.stopAnimating()
-            self.hintActivityIndicator.isHidden = true
         }
         
     }
@@ -80,13 +79,12 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
             activeGame.usedWords = [""]
         }
         pastWordsTableView.reloadData()
-        hintActivityIndicator.isHidden = false
         hintActivityIndicator.startAnimating()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             self.activeGame = WordGame()
+            Save.setToken(tokenKey: "active", newVal: self.activeGame as NSObject)
             self.hintActivityIndicator.stopAnimating()
-            self.hintActivityIndicator.isHidden = true
             self.currentWordLabel.text = self.activeGame.currentWord
         }
     }
@@ -103,17 +101,28 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         pastWordsTableView.delegate = self
         pastWordsTableView.dataSource = self
         pastWordsTableView.transform = CGAffineTransform (scaleX: 1,y: -1);
-
+        
         currentWordLabel.text = ""
+        
+        if let gameToken = Save.getToken(tokenKey: "active") as! WordGame? {
+            activeGame = gameToken
+            currentWordLabel.text = activeGame.currentWord
+            streakLabel.text = "Streak: \(activeGame.usedWords.count)"
+        } else {
+            currentWordLabel.text = ""
+            
+        }
+        
         errorLogLabel.text = ""
         hintLogLabel.text = ""
-        hintActivityIndicator.isHidden = false
         
         inputTextField.becomeFirstResponder()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        reset()
+        if activeGame == nil {
+            reset()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -146,7 +155,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.transform = CGAffineTransform (scaleX: 1,y: -1);
         return cell
     }
-
+    
 
 }
 
