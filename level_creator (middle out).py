@@ -30,6 +30,21 @@ class Node:
 		return self.get_word() == other.get_word() and self.get_depth() > other.get_depth()
 
 
+def print_list(arr):
+	print = ""
+	length = len(arr)
+	for i in range(len(arr)):
+		item = arr[i]
+		if type(item) == list:
+			print += print_list(item)
+		else:
+			print += str(item)
+			if i < length-1:
+				print += ", "
+	print += "\n"
+	return print
+
+
 # finds all the possible moves on a given word and returns their nodes
 def get_perms(node):
 	word = node.get_word()
@@ -80,22 +95,16 @@ def turn(node):
 	# checks if each of the perms has already been played
 	for perm in perms.copy():
 		# deals for situations when the permutation has already been played at a shallower depth
-		if perm in already_played:
-			perms.remove(perm)
-
-	# only add the words that haven't been played before
-	already_played.extend(perms)
+		for nodes_at_depth in nodes:
+			if perm in nodes_at_depth:
+				perms.remove(perm)
 
 	# stop if current depth is within the desired move radius
 	current_depth = node.get_depth() + 1
-	if current_depth >= num_moves:
-		target_nodes.extend(perms)
-		return
-
-	# repeat the process on each permutation
-	for new_node in perms:
-		turn(new_node)
-
+	try:
+		nodes[current_depth].extend(perms)
+	except IndexError:
+		nodes.append(perms)
 
 # start timer
 start = time.time()
@@ -104,14 +113,18 @@ with open("dictionary.txt") as f:
 	dictionary = [x.strip('\n') for x in f.readlines()]
 alpha = string.ascii_lowercase
 start_word = list("fat")
-num_moves = 4  # set the "move radius"
-already_played = [Node(start_word, 0, None)]  # records all words that have already been played before
-target_nodes = []  # all the nodes that have words on the "move radius"
+num_moves = 3  # set the "move radius"
+nodes = [[Node(start_word, 0, None)]]  # all the nodes. Index corresponds to the depth
 
 # starts creating the level
-turn(Node(start_word, 0, None))  # set the first turn with a depth of 0
+for depth in range(num_moves):
+	for node in nodes[depth]:
+		turn(node)
 
-print("time:", round(time.time() - start, 2), "seconds")
-print("possibilities:", len(target_nodes))
-for node in target_nodes:
+# print the levels
+end = time.time()
+for node in nodes[-1]:
 	print(node)
+
+print("\ntime:", round(end - start, 2), "seconds")
+print("possibilities:", len(nodes[-1]))
