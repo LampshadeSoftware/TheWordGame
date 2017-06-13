@@ -237,7 +237,7 @@
 				TargetAttributes = {
 					CC3A4B291EB0F3F300C5E2A5 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = K9QX3VKV28;
+						DevelopmentTeam = 78T5GXP6Q3;
 						ProvisioningStyle = Automatic;
 					};
 					CC3A4B401EB0F3F300C5E2A5 = {
@@ -471,11 +471,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = K9QX3VKV28;
+				DEVELOPMENT_TEAM = 78T5GXP6Q3;
 				INFOPLIST_FILE = TheWordGame/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.lampshadesoftware.thewordgame;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cowboy.thewordgame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -485,11 +485,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = K9QX3VKV28;
+				DEVELOPMENT_TEAM = 78T5GXP6Q3;
 				INFOPLIST_FILE = TheWordGame/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.lampshadesoftware.thewordgame;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cowboy.thewordgame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
