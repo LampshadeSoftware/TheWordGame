@@ -203,6 +203,7 @@ class TimeGameViewController: UIViewController, UITableViewDelegate, UITableView
     let timeLimit = 59
     var timeValue: Int!
     var gameInProgress = false
+    var best: Int!
     
     // Override Functions
     

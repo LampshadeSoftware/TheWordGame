@@ -50,6 +50,9 @@ class Save: NSObject, NSCoding {
         let onDisk = NSKeyedUnarchiver.unarchiveObject(withFile: Save.ArchiveURL.path) as! Save?
         if onDisk != nil {
             data = onDisk!
+            print("Successfully retrieved data")
+        } else {
+            print("Failed to retrieve data...")
         }
     }
     
