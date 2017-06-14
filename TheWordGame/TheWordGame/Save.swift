@@ -57,6 +57,10 @@ class Save: NSObject, NSCoding {
     }
     
     static func setToken(tokenKey: String, newVal: NSObject) {
+        if tokenKey == "default" {
+            print("Error: GameModeIdentifier was not set. Save Failed.")
+            return
+        }
         data.tokens[tokenKey] = newVal
     }
     
