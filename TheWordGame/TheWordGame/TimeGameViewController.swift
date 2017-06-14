@@ -13,7 +13,7 @@ class TimeGameViewController: GameViewController {
     var startButton: UIButton!
     
     // Buttons
-    @IBAction func startButtonPressed(_ sender: Any) {
+    func startButtonPressed() {
         // Remove start button
         startButton.isEnabled = false
         startButton.isHidden = true
@@ -35,8 +35,6 @@ class TimeGameViewController: GameViewController {
         } else if currentWordLabel.text == "2" {
             currentWordLabel.text = "1"
         } else if currentWordLabel.text == "1" {
-            currentWordLabel.text = ""
-            currentWordLabel.textColor = WordGameUI.yellow
             startGame()
             timer.invalidate()
             timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
@@ -49,8 +47,6 @@ class TimeGameViewController: GameViewController {
         }
         topLabel.text = "0:\(displayVal)"
         if timeValue == 0 {
-            currentWordLabel.textColor = WordGameUI.blue
-            currentWordLabel.text = "SCORE: \(self.activeGame.usedWords.count)"
             timer.invalidate()
             finishGame()
         }
@@ -64,6 +60,7 @@ class TimeGameViewController: GameViewController {
     func startGame() {
         gameInProgress = true
         
+        currentWordLabel.textColor = WordGameUI.yellow
         currentWordLabel.text = activeGame.currentWord
         hintButton.isEnabled = true
         hintButton.isHidden = false
@@ -74,6 +71,9 @@ class TimeGameViewController: GameViewController {
     
     func finishGame() {
         gameInProgress = false
+        
+        currentWordLabel.textColor = WordGameUI.blue
+        currentWordLabel.text = "SCORE: \(self.activeGame.usedWords.count)"
         
         // Clear game information
         inputTextField.text = ""
@@ -93,8 +93,6 @@ class TimeGameViewController: GameViewController {
         
         submitButton.isEnabled = false
         submitButton.isHidden = true
-        
-        
         
     }
     
@@ -140,7 +138,7 @@ class TimeGameViewController: GameViewController {
         startButton.setTitle("TAP TO START", for: .normal)
         startButton.setTitleColor(WordGameUI.green, for: .normal)
         startButton.titleLabel?.font = WordGameUI.font(size: 60)
-        startButton.addTarget(self, action: #selector(startButtonPressed(_:)), for: .touchDown)
+        startButton.addTarget(self, action: #selector(startButtonPressed), for: .touchDown)
         startButton.isHidden = true
         startButton.isEnabled = false
         view.addSubview(startButton)
