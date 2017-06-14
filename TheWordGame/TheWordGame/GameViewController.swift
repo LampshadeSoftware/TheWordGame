@@ -29,8 +29,11 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var inputTextField: UITextField!
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        submit()
+        returnKeyPressed()
         return true
+    }
+    func returnKeyPressed() {
+        submit()
     }
    
     var activityIndicator: UIActivityIndicatorView!
@@ -56,13 +59,17 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
     func resetButtonPressed() {
         reset()
     }
+    var backButton: UIButton!
+    func backButtonPressed() {
+        present(MainMenuViewController(), animated: true, completion: nil)
+    }
     
     func setUpUI() {
         view.backgroundColor = WordGameUI.dark
         let width = view.bounds.width
         let height = view.bounds.height
-        print(width)
-        print(height)
+        // print(width)
+        // print(height)
         
         bannerView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: height * 0.1))
         bannerView.backgroundColor = WordGameUI.yellow
@@ -83,6 +90,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         currentWordLabel.textColor = WordGameUI.yellow
         currentWordLabel.center = CGPoint(x: width / 2, y: height * 0.45)
         currentWordLabel.textAlignment = .center
+        currentWordLabel.text = ""
         view.addSubview(currentWordLabel)
         
         inputTextField = UITextField(frame: CGRect(x: 0, y: 0, width: width * 0.95, height: 30))
@@ -134,6 +142,13 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         resetButton.addTarget(self, action: #selector(resetButtonPressed), for: .touchDown)
         bannerView.addSubview(resetButton)
         
+        backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: bannerView.bounds.height))
+        backButton.setTitle("BACK", for: .normal)
+        backButton.setTitleColor(WordGameUI.dark, for: .normal)
+        backButton.titleLabel?.font = WordGameUI.font(size: 20)
+        backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchDown)
+        bannerView.addSubview(backButton)
+        
         logLabel = UILabel(frame: CGRect(x: 0, y: height * 0.51, width: width, height: 22))
         logLabel.textAlignment = .center
         logLabel.font = WordGameUI.font(size: 17)
@@ -144,6 +159,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
     // Properties
     var activeGame: WordGame!
     var gameModeIdentifier = "default"
+    var saveGameEnabled = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -200,7 +216,9 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             self.activeGame = WordGame()
-            Save.setToken(tokenKey: self.gameModeIdentifier, newVal: self.activeGame)
+            if self.saveGameEnabled {
+                Save.setToken(tokenKey: self.gameModeIdentifier, newVal: self.activeGame)
+            }
             self.activityIndicator.stopAnimating()
             self.doAfterReset()
             

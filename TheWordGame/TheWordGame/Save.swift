@@ -62,6 +62,7 @@ class Save: NSObject, NSCoding {
             return
         }
         data.tokens[tokenKey] = newVal
+        print("Succssfully staged token [\(tokenKey)] for save")
     }
     
     static func getToken(tokenKey: String) -> NSObject? {

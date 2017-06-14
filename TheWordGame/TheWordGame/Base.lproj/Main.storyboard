@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Main Menu View Controller-->
         <scene sceneID="IME-J6-mvJ">
             <objects>
-                <viewController id="b5o-sW-Qww" sceneMemberID="viewController">
+                <viewController id="b5o-sW-Qww" customClass="MainMenuViewController" customModule="TheWordGame" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YLS-Dc-cDI"/>
                         <viewControllerLayoutGuide type="bottom" id="ZKB-dF-CgC"/>
@@ -42,39 +42,6 @@
                                 <color key="textColor" red="0.71086861489999997" green="0.83657380520000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YeL-Dd-ORd">
-                                <rect key="frame" x="141" y="248" width="92" height="67"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="GillSans-Light" family="Gill Sans" pointSize="40"/>
-                                <state key="normal" title="ZEN">
-                                    <color key="titleColor" red="0.52516597600000003" green="1" blue="0.52584429669999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <segue destination="BYZ-38-t0r" kind="presentation" id="oG5-4m-UY3"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0z5-Ac-Zr7">
-                                <rect key="frame" x="93" y="323" width="188" height="67"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="GillSans-Light" family="Gill Sans" pointSize="40"/>
-                                <state key="normal" title="TIME TRIAL">
-                                    <color key="titleColor" red="0.52516597600000003" green="1" blue="0.52584429669999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <segue destination="QS0-xY-Gbb" kind="presentation" id="B8e-0w-cnI"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="41b-ej-SeB">
-                                <rect key="frame" x="93" y="398" width="188" height="67"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="GillSans-Light" family="Gill Sans" pointSize="40"/>
-                                <state key="normal" title="STATS">
-                                    <color key="titleColor" red="0.71086861489999997" green="0.83657380520000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <segue destination="a8t-rv-L73" kind="presentation" id="V99-NM-oFl"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.13174012369999999" green="0.15503615470000001" blue="0.1853227459" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -82,42 +49,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KSw-Yy-a6B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-739" y="105"/>
-        </scene>
-        <!--Zen Game View Controller-->
-        <scene sceneID="tne-QT-ifu">
-            <objects>
-                <viewController id="BYZ-38-t0r" customClass="ZenGameViewController" customModule="TheWordGame" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="30" y="-209"/>
-        </scene>
-        <!--Time Game View Controller-->
-        <scene sceneID="iO1-47-3sK">
-            <objects>
-                <viewController id="QS0-xY-Gbb" customClass="TimeGameViewController" customModule="TheWordGame" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="HmN-0r-bMU"/>
-                        <viewControllerLayoutGuide type="bottom" id="ZUk-2z-u2e"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="ODW-hX-hdW">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cd2-aO-1AQ" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="206" y="438"/>
         </scene>
         <!--Stats View Controller-->
         <scene sceneID="SC6-vc-kFo">

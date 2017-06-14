@@ -58,7 +58,7 @@ class TimeGameViewController: GameViewController {
     }
     
     override func setTopLabel() {
-        
+        // intentionally left blank
     }
     
     func startGame() {
@@ -79,8 +79,12 @@ class TimeGameViewController: GameViewController {
         inputTextField.text = ""
         logLabel.text = ""
         
-        topLabel.text = ""
-        currentWordLabel.text = ""
+        if activeGame.usedWords.count > best {
+            best = activeGame.usedWords.count
+            Save.setToken(tokenKey: "timeBest", newVal: best as NSObject)
+        }
+        topLabel.text = "Best: \(best)"
+        
         activeGame.usedWords = [""]
         pastWordsTableView.reloadData()
         
@@ -90,12 +94,15 @@ class TimeGameViewController: GameViewController {
         submitButton.isEnabled = false
         submitButton.isHidden = true
         
-        currentWordLabel.textColor = WordGameUI.blue
-        currentWordLabel.text = "SCORE: \(activeGame.usedWords.count)"
+        
         
     }
     
-    
+    override func returnKeyPressed() {
+        if gameInProgress {
+            super.returnKeyPressed()
+        }
+    }
     
     override func reset() {
         if timer != nil {
@@ -104,11 +111,11 @@ class TimeGameViewController: GameViewController {
         super.reset()
     }
     override func doAfterReset() {
-        topLabel.text = "Best: \(best)"
         self.currentWordLabel.text = ""
         self.currentWordLabel.textColor = WordGameUI.yellow
         self.startButton.isEnabled = true
         self.startButton.isHidden = false
+        
     }
     
     // Properties
@@ -122,6 +129,10 @@ class TimeGameViewController: GameViewController {
     
     override func viewDidLoad() {
         gameModeIdentifier = "time"
+        saveGameEnabled = false
+        if let bestToken = Save.getToken(tokenKey: "timeBest") {
+            best = bestToken as! Int
+        }
         super.viewDidLoad()
         topLabel.text = "Best: \(best)"
         startButton = UIButton(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height * 0.15))
