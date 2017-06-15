@@ -11,8 +11,6 @@ import UIKit
 class TimeGameViewController: GameViewController {
     
     var startButton: UIButton!
-    
-    // Buttons
     func startButtonPressed() {
         // Remove start button
         startButton.isEnabled = false
@@ -28,7 +26,7 @@ class TimeGameViewController: GameViewController {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countDown), userInfo: nil, repeats: true)
     }
 
-    // Aux Functions
+    // Time Trial Specific Functions
     func countDown() {
         if currentWordLabel.text == "3" {
             currentWordLabel.text = "2"
@@ -51,10 +49,6 @@ class TimeGameViewController: GameViewController {
             finishGame()
         }
         timeValue = timeValue - 1
-    }
-    
-    override func setTopLabel() {
-        // intentionally left blank
     }
     
     func startGame() {
@@ -96,29 +90,11 @@ class TimeGameViewController: GameViewController {
         
     }
     
-    override func returnKeyPressed() {
-        if gameInProgress {
-            super.returnKeyPressed()
-        }
-    }
     
-    override func reset() {
-        if timer != nil {
-            timer.invalidate()
-        }
-        super.reset()
-    }
-    override func doAfterReset() {
-        self.currentWordLabel.text = ""
-        self.currentWordLabel.textColor = WordGameUI.yellow
-        self.startButton.isEnabled = true
-        self.startButton.isHidden = false
-        
-    }
     
     // Properties
     var timer: Timer!
-    let timeLimit = 10
+    let timeLimit = 59
     var timeValue: Int!
     var gameInProgress = false
     var best = 0
@@ -137,7 +113,7 @@ class TimeGameViewController: GameViewController {
         startButton.center = currentWordLabel.center
         startButton.setTitle("TAP TO START", for: .normal)
         startButton.setTitleColor(WordGameUI.green, for: .normal)
-        startButton.titleLabel?.font = WordGameUI.font(size: 60)
+        startButton.titleLabel?.font = WordGameUI.font(size: 56)
         startButton.addTarget(self, action: #selector(startButtonPressed), for: .touchDown)
         startButton.isHidden = true
         startButton.isEnabled = false
@@ -150,14 +126,31 @@ class TimeGameViewController: GameViewController {
     
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        reset()
+    override func updateTopLabel() {
+        // intentionally left blank
+    }
+    override func resetTopLabel() {
+        topLabel.text = ""
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func returnKeyPressed() {
+        if gameInProgress {
+            super.returnKeyPressed()
+        }
     }
     
+    override func reset() {
+        if timer != nil {
+            timer.invalidate()
+        }
+        super.reset()
+    }
+    override func doAfterReset() {
+        self.currentWordLabel.text = ""
+        self.currentWordLabel.textColor = WordGameUI.yellow
+        self.startButton.isEnabled = true
+        self.startButton.isHidden = false
+        activeGame.addPlayer("user")
+    }
     
 }

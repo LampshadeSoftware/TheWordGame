@@ -9,7 +9,8 @@
 import Foundation
 
 class WordGame: NSObject, NSCoding {
-    var players: Circuit<String>
+    var players: [PlayerData]
+    var turn: Int
     var lastWord, currentWord: String
     var usedWords: [String]
     var errorLog: String
@@ -18,14 +19,16 @@ class WordGame: NSObject, NSCoding {
     static var common = WordGame.generateCommons()
     
     override init() {
-        players = Circuit()
+        players = [PlayerData]()
+        turn = 0
         lastWord = ""
         currentWord = WordGame.generateStartWord()
         usedWords = [String]()
         errorLog = ""
     }
-    init(lastWord: String, currentWord: String, usedWords: [String]) {
-        players = Circuit()
+    init(lastWord: String, currentWord: String, usedWords: [String], players: [PlayerData], turn: Int) {
+        self.players = players
+        self.turn = turn
         self.lastWord = lastWord
         self.currentWord = currentWord
         self.usedWords = usedWords
@@ -49,7 +52,17 @@ class WordGame: NSObject, NSCoding {
                 print("Unable to decode usedWords")
                 return nil
         }
-        self.init(lastWord: _lastWord, currentWord: _currentWord, usedWords: _usedWords)
+        guard let _playerData = aDecoder.decodeObject(forKey: "playerData") as? [PlayerData]
+            else {
+                print("Unable to decode playerData")
+                return nil
+        }
+        guard let _turn = aDecoder.decodeObject(forKey: "turn") as? Int
+            else {
+                print("Unable to decode turn")
+                return nil
+        }
+        self.init(lastWord: _lastWord, currentWord: _currentWord, usedWords: _usedWords, players: _playerData, turn: _turn)
     }
     
     // Encode
@@ -60,10 +73,13 @@ class WordGame: NSObject, NSCoding {
     }
     
     func addPlayer(_ name: String) {
-        players.insert(name)
+        players.append(PlayerData(name: name))
     }
     func removePlayer() {
-        players.remove()
+        // TODO
+    }
+    func getCurrentPlayer() -> PlayerData {
+        return players[turn]
     }
     
     
@@ -281,9 +297,10 @@ class WordGame: NSObject, NSCoding {
         case 6:
             usedWords.append(currentWord)
             lastWord = currentWord
+            players[turn].addPlayedWord(word: currentWord)
+            turn = (turn + 1) % players.count
             currentWord = word
             errorLog = ""
-        // _ = players.cycle()
         default:
             print("Something went wrong...")
         }

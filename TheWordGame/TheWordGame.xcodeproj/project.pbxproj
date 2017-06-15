@@ -25,8 +25,10 @@
 		CCA6AA901EB2761D00B307D9 /* WordGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA6AA8C1EB2761D00B307D9 /* WordGame.swift */; };
 		CCA6AA911EB2761D00B307D9 /* common.txt in Resources */ = {isa = PBXBuildFile; fileRef = CCA6AA8D1EB2761D00B307D9 /* common.txt */; };
 		CCA6AA921EB2761D00B307D9 /* dictionary.txt in Resources */ = {isa = PBXBuildFile; fileRef = CCA6AA8E1EB2761D00B307D9 /* dictionary.txt */; };
-		CCA6AA931EB2761D00B307D9 /* Circuit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA6AA8F1EB2761D00B307D9 /* Circuit.swift */; };
 		CCEA77501EF0E1AB0002F559 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCEA774F1EF0E1AB0002F559 /* MainMenuViewController.swift */; };
+		CCEA77521EF1DC760002F559 /* PlayerSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCEA77511EF1DC760002F559 /* PlayerSetupViewController.swift */; };
+		CCEA77561EF1DD8B0002F559 /* PlayerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCEA77551EF1DD8B0002F559 /* PlayerData.swift */; };
+		CCEA77581EF1E3A90002F559 /* PassPlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCEA77571EF1E3A90002F559 /* PassPlayViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,8 +73,10 @@
 		CCA6AA8C1EB2761D00B307D9 /* WordGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordGame.swift; sourceTree = "<group>"; };
 		CCA6AA8D1EB2761D00B307D9 /* common.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = common.txt; sourceTree = "<group>"; };
 		CCA6AA8E1EB2761D00B307D9 /* dictionary.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dictionary.txt; sourceTree = "<group>"; };
-		CCA6AA8F1EB2761D00B307D9 /* Circuit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Circuit.swift; sourceTree = "<group>"; };
 		CCEA774F1EF0E1AB0002F559 /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
+		CCEA77511EF1DC760002F559 /* PlayerSetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerSetupViewController.swift; sourceTree = "<group>"; };
+		CCEA77551EF1DD8B0002F559 /* PlayerData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerData.swift; sourceTree = "<group>"; };
+		CCEA77571EF1E3A90002F559 /* PassPlayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassPlayViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,10 +138,11 @@
 				CC3A4B341EB0F3F300C5E2A5 /* TheWordGame.xcdatamodeld */,
 				CCA6AA881EB270FB00B307D9 /* PastWordsTableView.swift */,
 				CC1D6B9B1ED72D9200EB56FB /* TimeGameViewController.swift */,
-				CC1D6B9F1EDE549F00EB56FB /* Save.swift */,
 				CCA6402F1EE0A1D0009EC2AE /* StatsViewController.swift */,
 				CC5CCC541EF0702E007E38E0 /* GameViewController.swift */,
 				CCEA774F1EF0E1AB0002F559 /* MainMenuViewController.swift */,
+				CCEA77511EF1DC760002F559 /* PlayerSetupViewController.swift */,
+				CCEA77571EF1E3A90002F559 /* PassPlayViewController.swift */,
 			);
 			path = TheWordGame;
 			sourceTree = "<group>";
@@ -163,11 +168,12 @@
 		CCA6AA941EB2762300B307D9 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				CC1D6B9F1EDE549F00EB56FB /* Save.swift */,
 				CCA6AA8C1EB2761D00B307D9 /* WordGame.swift */,
 				CCA6AA8D1EB2761D00B307D9 /* common.txt */,
 				CCA6AA8E1EB2761D00B307D9 /* dictionary.txt */,
-				CCA6AA8F1EB2761D00B307D9 /* Circuit.swift */,
 				CC5CCC561EF074FC007E38E0 /* WordGameUI.swift */,
+				CCEA77551EF1DD8B0002F559 /* PlayerData.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -316,9 +322,11 @@
 				CCA6AA871EB26FB600B307D9 /* PastWordCell.swift in Sources */,
 				CC1D6BA01EDE549F00EB56FB /* Save.swift in Sources */,
 				CCA6AA891EB270FB00B307D9 /* PastWordsTableView.swift in Sources */,
+				CCEA77521EF1DC760002F559 /* PlayerSetupViewController.swift in Sources */,
 				CCA6AA861EB26FB600B307D9 /* ZenGameViewController.swift in Sources */,
 				CC3A4B2E1EB0F3F300C5E2A5 /* AppDelegate.swift in Sources */,
-				CCA6AA931EB2761D00B307D9 /* Circuit.swift in Sources */,
+				CCEA77561EF1DD8B0002F559 /* PlayerData.swift in Sources */,
+				CCEA77581EF1E3A90002F559 /* PassPlayViewController.swift in Sources */,
 				CCA640301EE0A1D0009EC2AE /* StatsViewController.swift in Sources */,
 				CCEA77501EF0E1AB0002F559 /* MainMenuViewController.swift in Sources */,
 				CC5CCC571EF074FC007E38E0 /* WordGameUI.swift in Sources */,

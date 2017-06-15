@@ -15,6 +15,11 @@ class ZenGameViewController: GameViewController {
 
     }
     
+    override func doAfterReset() {
+        super.doAfterReset()
+        activeGame.addPlayer("user")
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }

@@ -9,7 +9,7 @@
 import UIKit
 
 class MainMenuViewController: UIViewController {
-
+    
     
     var zenPortal: UIButton!
     func zenPortalPressed() {
@@ -19,10 +19,41 @@ class MainMenuViewController: UIViewController {
     func timePortalPressed() {
         present(TimeGameViewController(), animated: true, completion: nil)
     }
+    var passPlayPortal: UIButton!
+    func passPlayPortalPressed() {
+        present(PassPlayViewController(), animated: true, completion: nil)
+    }
+    
+    func generateTitle() {
+        let width = view.bounds.width
+        var tmp = UILabel(frame: CGRect(x: 0, y: 7, width: width, height: 82))
+        tmp.text = "the"
+        tmp.textColor = WordGameUI.blue
+        tmp.textAlignment = .center
+        tmp.font = WordGameUI.font(size: 64)
+        view.addSubview(tmp)
+        
+        tmp = UILabel(frame: CGRect(x: 0, y: 67, width: width, height: 82))
+        tmp.text = "WORD"
+        tmp.textColor = WordGameUI.yellow
+        tmp.textAlignment = .center
+        tmp.font = UIFont(name: "Gill Sans", size: 72)
+        tmp.shadowColor = .black
+        tmp.shadowOffset = CGSize(width: 3, height: 0)
+        view.addSubview(tmp)
+        
+        tmp = UILabel(frame: CGRect(x: 0, y: 118, width: width, height: 82))
+        tmp.text = "game"
+        tmp.textColor = WordGameUI.blue
+        tmp.textAlignment = .center
+        tmp.font = WordGameUI.font(size: 64)
+        view.addSubview(tmp)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = WordGameUI.dark
+        generateTitle()
     
         let width = view.bounds.width
         let height = view.bounds.height
@@ -41,6 +72,15 @@ class MainMenuViewController: UIViewController {
         timePortal.titleLabel?.textAlignment = .center
         timePortal.addTarget(self, action: #selector(timePortalPressed), for: .touchDown)
         view.addSubview(timePortal)
+        
+        passPlayPortal = UIButton(frame: CGRect(x: 0, y: height / 3 + 140, width: width, height: 50))
+        passPlayPortal.setTitle("MULTIPLAYER", for: .normal)
+        passPlayPortal.setTitleColor(WordGameUI.green, for: .normal)
+        passPlayPortal.titleLabel?.font = WordGameUI.font(size: 42)
+        passPlayPortal.titleLabel?.textAlignment = .center
+        passPlayPortal.addTarget(self, action: #selector(passPlayPortalPressed), for: .touchDown)
+        view.addSubview(passPlayPortal)
+        
         // Do any additional setup after loading the view.
     }
 

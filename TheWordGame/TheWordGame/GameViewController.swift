@@ -91,6 +91,8 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         currentWordLabel.center = CGPoint(x: width / 2, y: height * 0.45)
         currentWordLabel.textAlignment = .center
         currentWordLabel.text = ""
+        currentWordLabel.shadowColor = .black
+        currentWordLabel.shadowOffset = CGSize(width: 3, height: 0)
         view.addSubview(currentWordLabel)
         
         inputTextField = UITextField(frame: CGRect(x: 0, y: 0, width: width * 0.95, height: 30))
@@ -132,7 +134,6 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         topLabel.textAlignment = .center
         topLabel.font = WordGameUI.font(size: 22)
         topLabel.textColor = WordGameUI.dark
-        topLabel.text = "Streak: 0"
         bannerView.addSubview(topLabel)
         
         resetButton = UIButton(frame: CGRect(x: bannerView.bounds.width - 100, y: 0, width: 100, height: bannerView.bounds.height))
@@ -159,6 +160,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
     // Properties
     var activeGame: WordGame!
     var gameModeIdentifier = "default"
+    var defaultTopLabel = "Streak: 0"
     var saveGameEnabled = true
 
     override func viewDidLoad() {
@@ -168,7 +170,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         if let gameToken = Save.getToken(tokenKey: gameModeIdentifier) as! WordGame? {
             activeGame = gameToken
             currentWordLabel.text = activeGame.currentWord
-            topLabel.text = "Streak: \(activeGame.usedWords.count)"
+            updateTopLabel()
         } else {
             currentWordLabel.text = ""
         }
@@ -192,7 +194,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         inputTextField.text = ""
         errorLog(message: activeGame.errorLog)
         currentWordLabel.text = activeGame.currentWord
-        setTopLabel()
+        updateTopLabel()
         DispatchQueue.main.async {
             self.pastWordsTableView.reloadData()
         }
@@ -201,7 +203,10 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
     }
-    func setTopLabel() {
+    func resetTopLabel() {
+        topLabel.text = defaultTopLabel
+    }
+    func updateTopLabel() {
         topLabel.text = "Streak: \(activeGame.usedWords.count)"
     }
     func reset() {
@@ -225,7 +230,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     func doAfterReset() {
-        topLabel.text = "Streak: 0"
+        resetTopLabel()
         self.currentWordLabel.text = self.activeGame.currentWord
     }
 
