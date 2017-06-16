@@ -28,12 +28,12 @@ class PlayerData: NSObject, NSCoding {
     required convenience init?(coder aDecoder: NSCoder) {
         guard let _name = aDecoder.decodeObject(forKey: "name") as? String
             else {
-                print("Unable to decode name")
+                print("Unable to decode [name]")
                 return nil
         }
         guard let _wordsPlayed = aDecoder.decodeObject(forKey: "wordsPlayed") as? [String]
             else {
-                print("Unable to decode wordsPlayed")
+                print("Unable to decode [wordsPlayed]")
                 return nil
         }
         let _active = aDecoder.decodeBool(forKey: "active")

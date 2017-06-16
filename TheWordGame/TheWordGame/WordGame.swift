@@ -39,22 +39,22 @@ class WordGame: NSObject, NSCoding {
     required convenience init?(coder aDecoder: NSCoder) {
         guard let _lastWord = aDecoder.decodeObject(forKey: "lastWord") as? String
         else {
-            print("Unable to decode lastWord")
+            print("Unable to decode [lastWord]")
             return nil
         }
         guard let _currentWord = aDecoder.decodeObject(forKey: "currentWord") as? String
             else {
-                print("Unable to decode currentWord")
+                print("Unable to decode [currentWord]")
                 return nil
         }
         guard let _usedWords = aDecoder.decodeObject(forKey: "usedWords") as? [String]
             else {
-                print("Unable to decode usedWords")
+                print("Unable to decode [usedWords]")
                 return nil
         }
         guard let _playerData = aDecoder.decodeObject(forKey: "playerData") as? [PlayerData]
             else {
-                print("Unable to decode playerData")
+                print("Unable to decode [playerData]")
                 return nil
         }
         let _turn = aDecoder.decodeInteger(forKey: "turn")

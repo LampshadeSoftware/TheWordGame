@@ -19,7 +19,7 @@ class Save {
     static func writeSaveData() {
         let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(Save.data, toFile: Save.ArchiveURL.path)
         if isSuccessfulSave {
-            print("Data successfully saved.")
+            print("Successfully saved data")
         } else {
             print("Failed to save data...")
         }
