@@ -11,11 +11,12 @@ import Foundation
 class PlayerData: NSObject, NSCoding {
     let name: String
     var wordsPlayed: [String]
-    var active = true
+    var active: Bool
     
     init(name: String) {
         self.name = name
         wordsPlayed = [String]()
+        active = true
     }
     
     init(name: String, wordsPlayed: [String], active: Bool) {
@@ -35,11 +36,8 @@ class PlayerData: NSObject, NSCoding {
                 print("Unable to decode wordsPlayed")
                 return nil
         }
-        guard let _active = aDecoder.decodeObject(forKey: "active") as? Bool
-            else {
-                print("Unable to decode active")
-                return nil
-        }
+        let _active = aDecoder.decodeBool(forKey: "active")
+        
         self.init(name: _name, wordsPlayed: _wordsPlayed, active: _active)
     }
     

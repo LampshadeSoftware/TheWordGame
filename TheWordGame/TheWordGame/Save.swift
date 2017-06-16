@@ -8,31 +8,10 @@
 
 import Foundation
 
-class Save: NSObject, NSCoding {
-    private var tokens: [String: NSObject]
-    
-    func encode(with aCoder: NSCoder) {
-        aCoder.encode(tokens, forKey: "tokens")
-    }
-    override init() {
-        tokens = [String: NSObject]()
-    }
-    init(tokens: [String: NSObject]) {
-        self.tokens = tokens
-    }
-    
-    required convenience init?(coder aDecoder: NSCoder) {
-        guard let tokens = aDecoder.decodeObject(forKey: "tokens") as? [String: NSObject]
-        else {
-            print("Unable to decode Save object")
-            return nil
-        }
-        self.init(tokens: tokens)
-    }
-    
-    
+class Save {
+
     // Static
-    private static var data = Save()
+    private static var data = [String: NSObject]()
     
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("data")
@@ -47,7 +26,7 @@ class Save: NSObject, NSCoding {
     }
     
     static func loadSaveData() {
-        let onDisk = NSKeyedUnarchiver.unarchiveObject(withFile: Save.ArchiveURL.path) as! Save?
+        let onDisk = NSKeyedUnarchiver.unarchiveObject(withFile: Save.ArchiveURL.path) as! [String: NSObject]?
         if onDisk != nil {
             data = onDisk!
             print("Successfully retrieved data")
@@ -61,12 +40,13 @@ class Save: NSObject, NSCoding {
             print("Error: GameModeIdentifier was not set. Save Failed.")
             return
         }
-        data.tokens[tokenKey] = newVal
+        data[tokenKey] = newVal
         print("Succssfully staged token [\(tokenKey)] for save")
+
     }
     
     static func getToken(tokenKey: String) -> NSObject? {
-        let val = data.tokens[tokenKey]
+        let val = data[tokenKey]
         if val == nil {
             return nil
         } else {
@@ -75,8 +55,9 @@ class Save: NSObject, NSCoding {
     }
     
     static func resetData() {
-        data = Save()
+        data = [String: NSObject]()
         writeSaveData()
+        print("Data has been reset")
     }
 }
 

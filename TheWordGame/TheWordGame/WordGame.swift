@@ -57,11 +57,7 @@ class WordGame: NSObject, NSCoding {
                 print("Unable to decode playerData")
                 return nil
         }
-        guard let _turn = aDecoder.decodeObject(forKey: "turn") as? Int
-            else {
-                print("Unable to decode turn")
-                return nil
-        }
+        let _turn = aDecoder.decodeInteger(forKey: "turn")
         self.init(lastWord: _lastWord, currentWord: _currentWord, usedWords: _usedWords, players: _playerData, turn: _turn)
     }
     
@@ -70,6 +66,8 @@ class WordGame: NSObject, NSCoding {
         aCoder.encode(lastWord, forKey: "lastWord")
         aCoder.encode(currentWord, forKey: "currentWord")
         aCoder.encode(usedWords, forKey: "usedWords")
+        aCoder.encode(players, forKey: "playerData")
+        aCoder.encode(turn, forKey: "turn")
     }
     
     func addPlayer(_ name: String) {
@@ -224,21 +222,18 @@ class WordGame: NSObject, NSCoding {
         if play.characters.count != word.characters.count {
             return false
         }
+        var letterCount = [Int](repeating: 0, count: 26)
         
-        for char in play.characters {
-            var count1 = 0
-            for x in play.characters {
-                if x == char {
-                    count1 += 1
-                }
-            }
-            var count2 = 0
-            for y in word.characters {
-                if y == char {
-                    count2 += 1
-                }
-            }
-            if count1 != count2 {
+        let playVals = play.unicodeScalars.filter{$0.isASCII}.map{$0.value}
+        let wordVals = word.unicodeScalars.filter{$0.isASCII}.map{$0.value}
+        for val in playVals {
+            letterCount[Int(val) - 97] += 1
+        }
+        for val in wordVals {
+            letterCount[Int(val) - 97] -= 1
+        }
+        for count in letterCount {
+            if count != 0 {
                 return false
             }
         }

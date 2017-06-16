@@ -20,12 +20,13 @@
                     <view key="view" contentMode="scaleToFill" id="Fn0-yK-saF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.13174012369999999" green="0.15503615470000001" blue="0.1853227459" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" id="OhG-xK-qMC"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KSw-Yy-a6B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-740" y="104.7976011994003"/>
+            <point key="canvasLocation" x="199.19999999999999" y="104.7976011994003"/>
         </scene>
         <!--Stats View Controller-->
         <scene sceneID="SC6-vc-kFo">
@@ -57,9 +58,6 @@
                                         <state key="normal" title="BACK">
                                             <color key="titleColor" red="0.13174012369999999" green="0.15503615470000001" blue="0.1853227459" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
-                                        <connections>
-                                            <segue destination="b5o-sW-Qww" kind="presentation" id="mCT-2O-Fdu"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.81535078490000001" blue="0.2354753054" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
