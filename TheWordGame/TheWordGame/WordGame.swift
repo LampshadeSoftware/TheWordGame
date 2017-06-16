@@ -287,7 +287,7 @@ class WordGame: NSObject, NSCoding {
             errorLog = "Double play! Try again"
             return
         case 5:
-            errorLog = "fuck you"
+            errorLog = "You think you're pretty smart, huh?"
             return
         case 6:
             usedWords.append(currentWord)
