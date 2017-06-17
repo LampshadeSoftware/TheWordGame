@@ -21,7 +21,7 @@ class MainMenuViewController: UIViewController {
     }
     var passPlayPortal: UIButton!
     func passPlayPortalPressed() {
-        present(PassPlayViewController(), animated: true, completion: nil)
+        present(PlayerSetupViewController(), animated: true, completion: nil)
     }
     var resetButton: UIButton!
     func resetButtonPressed() {

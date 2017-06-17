@@ -31,9 +31,9 @@ class PassPlayViewController: GameViewController {
     
     override func doAfterReset() {
         super.doAfterReset()
-        activeGame.addPlayer("Daniel")
-        activeGame.addPlayer("Cowboy")
-        activeGame.addPlayer("Rio")
+		for player in PlayerSetupViewController.playerList {
+			activeGame.addPlayer(player)
+		}
         updateTopLabel()
     }
     
