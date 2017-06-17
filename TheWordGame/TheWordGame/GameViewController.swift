@@ -71,8 +71,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         // print(width)
         // print(height)
         
-        bannerView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: height * 0.1))
-        bannerView.backgroundColor = WordGameUI.yellow
+        bannerView = WordGameUI.getBanner(view: view)
         view.addSubview(bannerView)
         
         pastWordsTableView = UITableView(frame: CGRect(x:0, y:height * 0.1, width: width, height: height * 0.3), style: UITableViewStyle.plain)

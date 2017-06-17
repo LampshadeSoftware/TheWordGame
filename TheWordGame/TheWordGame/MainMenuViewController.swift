@@ -23,6 +23,18 @@ class MainMenuViewController: UIViewController {
     func passPlayPortalPressed() {
         present(PassPlayViewController(), animated: true, completion: nil)
     }
+    var resetButton: UIButton!
+    func resetButtonPressed() {
+        let alert = UIAlertController(title: "Reset", message: "Are you sure you want to reset all saved data?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .destructive) { (_) in
+            Save.resetData()
+        }
+        let noAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
     
     func generateTitle() {
         let width = view.bounds.width
@@ -80,6 +92,13 @@ class MainMenuViewController: UIViewController {
         passPlayPortal.titleLabel?.textAlignment = .center
         passPlayPortal.addTarget(self, action: #selector(passPlayPortalPressed), for: .touchDown)
         view.addSubview(passPlayPortal)
+        
+        resetButton = UIButton(frame: CGRect(x: 0, y: height - 50, width: 100, height: 50))
+        resetButton.setTitle("RESET", for: .normal)
+        resetButton.setTitleColor(WordGameUI.red, for: .normal)
+        resetButton.titleLabel?.textAlignment = .center
+        resetButton.addTarget(self, action: #selector(resetButtonPressed), for: .touchDown)
+        view.addSubview(resetButton)
         
         // Do any additional setup after loading the view.
     }

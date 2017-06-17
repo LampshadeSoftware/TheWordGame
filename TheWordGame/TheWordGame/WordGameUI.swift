@@ -19,4 +19,12 @@ class WordGameUI {
         return UIFont(name: "GillSans-Light", size: CGFloat(size))!
     }
     
+    static func getBanner(view: UIView) -> UIView {
+        let width = view.bounds.width
+        let height = view.bounds.height
+        let bannerView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: height * 0.1))
+        bannerView.backgroundColor = WordGameUI.yellow
+        
+        return bannerView
+    }
 }
