@@ -200,7 +200,6 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         if activeGame.usedWords.count > 0 {
             // scrollToBottom()
         }
-        
     }
     func resetTopLabel() {
         topLabel.text = defaultTopLabel

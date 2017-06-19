@@ -21,7 +21,11 @@ class MainMenuViewController: UIViewController {
     }
     var passPlayPortal: UIButton!
     func passPlayPortalPressed() {
-        present(PlayerSetupViewController(), animated: true, completion: nil)
+		if Save.getToken(tokenKey: "passPlay") == nil {
+			present(PlayerSetupViewController(), animated: true, completion: nil)
+		} else {
+			present(PassPlayViewController(), animated: true, completion: nil)
+		}
     }
     var resetButton: UIButton!
     func resetButtonPressed() {

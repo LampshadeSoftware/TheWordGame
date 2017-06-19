@@ -44,6 +44,9 @@ class Save {
         print("Succssfully staged token [\(tokenKey)] for save")
 
     }
+	static func unsetToken(tokenKey: String) {
+		data.removeValue(forKey: tokenKey)
+	}
     
     static func getToken(tokenKey: String) -> NSObject? {
         let val = data[tokenKey]

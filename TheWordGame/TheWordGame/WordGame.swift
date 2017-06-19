@@ -9,7 +9,7 @@
 import Foundation
 
 class WordGame: NSObject, NSCoding {
-    var players: [PlayerData]
+    private var players: [PlayerData]
     var turn: Int
     var lastWord, currentWord: String
     var usedWords: [String]
@@ -73,14 +73,20 @@ class WordGame: NSObject, NSCoding {
     func addPlayer(_ name: String) {
         players.append(PlayerData(name: name))
     }
-    func removePlayer() {
-        // TODO
+    func playerForfeited() {
+        players[turn].active = false
+		cyclePlayers()
     }
     func getCurrentPlayer() -> PlayerData {
         return players[turn]
     }
-    
-    
+	func cyclePlayers() {
+		turn = (turn + 1) % players.count
+		while !players[turn].active {
+			turn = (turn + 1) % players.count
+		}
+	}
+		
     static func generateStartWord() -> String {
         var potential = WordGame.common[Int(arc4random_uniform(UInt32(WordGame.common.count)))]
         
@@ -293,7 +299,7 @@ class WordGame: NSObject, NSCoding {
             usedWords.append(currentWord)
             lastWord = currentWord
             players[turn].addPlayedWord(word: currentWord)
-            turn = (turn + 1) % players.count
+			cyclePlayers()
             currentWord = word
             errorLog = ""
         default:

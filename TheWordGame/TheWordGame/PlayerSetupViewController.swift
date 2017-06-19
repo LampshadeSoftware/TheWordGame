@@ -49,6 +49,8 @@ class PlayerSetupViewController: UIViewController, UITableViewDelegate, UITableV
         
         present(alert, animated: true, completion: nil)
     }
+	
+	
     
     override func viewDidLoad() {
         super.viewDidLoad()
