@@ -360,12 +360,13 @@ class GameViewController: UIViewController, UITextFieldDelegate {
 				xPos += Double(scaledTileHeight) * 1.1
 			}
 			
-			self.newTile.addIndicator()
-			
-			// Adds the slide changedLetterIndicator
 			if self.moveType == 0 || self.moveType == 2 {
+				// Normal changedLetterIndicator
+				self.newTile.addIndicator()
+				
+				// Adds the slide changedLetterIndicator
 				self.changedLetterIndicator.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: 50*scaleDimension, height: 10*scaleDimension))
-				self.changedLetterIndicator.alpha = 0 // SET TO 1 TO ENABLE THE SLIDE ADD EFFECT
+				self.changedLetterIndicator.alpha = 0 // SET TO 1 TO ENABLE THE SLIDE ADD EFFECT AND COMMENT OUT "Normal ChangedLetterIndicator"
 				self.changedLetterIndicator.center.x = self.newTile.center.x
 				let yCenter = self.newTile.center.y + scaledTileHeight/CGFloat(2) + self.changedLetterIndicator.bounds.height
 				self.changedLetterIndicator.center.y = yCenter
@@ -376,9 +377,9 @@ class GameViewController: UIViewController, UITextFieldDelegate {
 				}
 			}
 		} // END of UIView animation
-		
 		previousMoveType = moveType
 	}
+	
 	func setTiles(to word: String) {
 		for _ in 0..<currentWord.count {
 			removeTile(index: 0)

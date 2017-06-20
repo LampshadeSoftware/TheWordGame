@@ -36,7 +36,7 @@ class Tile: UIView{
     }
     
     init(letter: String, defaultDimension: Double){
-        self.letter = letter
+        self.letter = letter.uppercased()
         super.init(frame: CGRect())
         
         self.frame.size = CGSize(width: defaultDimension, height: defaultDimension)
