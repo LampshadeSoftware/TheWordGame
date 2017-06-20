@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GameViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class GameViewController: UIViewController, UITextFieldDelegate {
     
     // UI Elements
     var bannerView: UIView!
@@ -16,7 +16,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
     var pastWordsTableView: UITableView!
     
     var topLabel: UILabel!
-    var currentWordLabel: UILabel!
+	
     var logLabel: UILabel!
     func errorLog(message: String) {
         logLabel.textColor = WordGameUI.red
@@ -84,17 +84,8 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         pastWordsTableView.dataSource = self
         pastWordsTableView.transform = CGAffineTransform (scaleX: 1,y: -1)
         view.addSubview(pastWordsTableView)
+		
 		*/
-        
-        currentWordLabel = UILabel(frame: CGRect(x: 0, y: 0, width: width * 0.9, height: height * 0.15))
-        currentWordLabel.font = WordGameUI.font(size: 64)
-        currentWordLabel.textColor = WordGameUI.yellow
-        currentWordLabel.center = CGPoint(x: width / 2, y: height * 0.45)
-        currentWordLabel.textAlignment = .center
-        currentWordLabel.text = ""
-        currentWordLabel.shadowColor = .black
-        currentWordLabel.shadowOffset = CGSize(width: 3, height: 0)
-        view.addSubview(currentWordLabel)
         
         inputTextField = UITextField(frame: CGRect(x: 0, y: 0, width: width * 0.95, height: 30))
         inputTextField.borderStyle = .roundedRect
@@ -156,8 +147,23 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         logLabel.font = WordGameUI.font(size: 17)
         logLabel.text = ""
         view.addSubview(logLabel)
+		
+		// New UI Stuff
+		screenSize = self.view.bounds
+		defaultDimension = Double(0.9*screenSize.width)/(1.1*4.0 - 0.1)
+		//self.currentWordHolderView.center = self.view.center
+		
+		// Styling for add indicator
+		currentWordHolderView = UIView(frame: CGRect(x: 0, y: height * 0.33, width: width, height: 80))
+		
+		changedLetterIndicator = UIView(frame: CGRect(x: 0, y: 85, width: 40, height: 10))
+		changedLetterIndicator.backgroundColor = UIColor(red:0.94, green:0.56, blue:0.23, alpha:1.0)
+		changedLetterIndicator.alpha = 0
+		currentWordHolderView.addSubview(changedLetterIndicator)
+		view.addSubview(currentWordHolderView)
+		
     }
-    
+	
     // Properties
     var activeGame: WordGame!
     var gameModeIdentifier = "default"
@@ -170,10 +176,10 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         if let gameToken = Save.getToken(tokenKey: gameModeIdentifier) as! WordGame? {
             activeGame = gameToken
-            currentWordLabel.text = activeGame.currentWord
+            // currentWordLabel.text = activeGame.currentWord
             updateTopLabel()
         } else {
-            currentWordLabel.text = ""
+            // currentWordLabel.text = ""
         }
         
         // Do any additional setup after loading the view.
@@ -191,10 +197,22 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // General Functions
     func submit() {
-        activeGame.submitWord(inputTextField.text!)
+		let play = inputTextField.text!
+        let move = activeGame.submitWord(play)
+		if move >= 0 {
+			let type: Int = move / 100
+			let index = move % 100
+			if type == 0 {
+				addTile(letter: play[index], index: index)
+			} else if type == 1 {
+				removeTile(index: index)
+			} else if type == 2 {
+				swapTile(letter: play[index], index: index)
+			}
+		}
         inputTextField.text = ""
         errorLog(message: activeGame.errorLog)
-        currentWordLabel.text = activeGame.currentWord
+        // currentWordLabel.text = activeGame.currentWord
         updateTopLabel()
         DispatchQueue.main.async {
             // self.pastWordsTableView.reloadData()
@@ -212,7 +230,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
     func reset() {
         inputTextField.text = ""
         logLabel.text = ""
-        currentWordLabel.text = ""
+        // currentWordLabel.text = ""
         if activeGame != nil {
             activeGame.usedWords = [""]
         }
@@ -231,7 +249,8 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     func doAfterReset() {
         resetTopLabel()
-        self.currentWordLabel.text = self.activeGame.currentWord
+        // self.currentWordLabel.text = self.activeGame.currentWord
+		setTiles(to: activeGame.currentWord)
     }
 
     func preScroll() {
@@ -246,42 +265,129 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.pastWordsTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
     }
-    
-    // Table View Stuff
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if activeGame != nil {
-            return activeGame.usedWords.count
-        }
-        return 0
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifier = "PastWordCell"
-        
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? PastWordCell  else {
-            fatalError("The dequeued cell is not an instance of PastWordCell.")
-        }
-        let word: String
-        
-        word = activeGame.usedWords[activeGame.usedWords.count - 1 - indexPath.row]
-        cell.setUpCell()
-        cell.wordLabel!.text = word
-        cell.transform = CGAffineTransform (scaleX: 1,y: -1);
-        return cell
-    }
-
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+	
+	// New UI Stuff
+	var screenSize: CGRect!
+	var currentWordHolderView: UIView!
+	var currentDimension: Double! // is the scalled dimesion when more than 4 tiles are on screen
+	var defaultDimension: Double! // this dimension perfectly fits 4 tiles on a screen without scalling
+	var newTile: Tile!  // is the tile that was added most recently
+	var currentWord = [Tile]()  // Array of all tiles (letters) on the screen
+	var moveType: Int!  // 0: add, 1: remove, 2: sub, 3: rearrange
+	var previousMoveType = 1
+	var changedLetterIndicator = UIView()
+	
+	func addTile(letter: String, index: Int){
+		// creates a new tile
+		moveType = 0
+		newTile = Tile(letter: letter, defaultDimension: defaultDimension)
+		currentWordHolderView.addSubview(newTile)
+		currentWord.insert(newTile, at: index)
+		updateWordVisuals(index: index)  // centers all the other letters and adjusts their size
+	}
+	func removeTile(index: Int){
+		moveType = 1
+		let tileToRemove = currentWord[index]
+		currentWord.remove(at: index)
+		self.updateWordVisuals(index: index)  // centers all the other letters and adjusts their size
+		
+		// Fades out the tile to remove
+		UIView.animate(withDuration: 0.5, animations: {
+			tileToRemove.alpha = 0
+			tileToRemove.center.y += 100
+		}) { (sucsess:Bool) in
+			tileToRemove.removeFromSuperview()
+		}
+	}
+	func swapTile(letter: String, index: Int){
+		moveType = 2
+		let oldTile = currentWord[index]
+		currentWord.remove(at: index)
+		
+		UIView.animate(withDuration: 0.5, animations: {
+			oldTile.alpha = 0
+			oldTile.center.y -= 75
+		}) { (sucsess:Bool) in
+			oldTile.removeFromSuperview()
+		}
+		
+		newTile = Tile(letter: letter, defaultDimension: defaultDimension)
+		newTile.center = oldTile.center
+		newTile.center.y += 150
+		newTile.transform = oldTile.transform
+		currentWordHolderView.addSubview(newTile)
+		currentWord.insert(newTile, at: index)
+		updateWordVisuals(index: index)
+	}
+	func updateWordVisuals(index: Int){
+		currentWordHolderView.bringSubview(toFront: changedLetterIndicator)
+		// gets dimension variables
+		let numTiles = currentWord.count
+		currentDimension = Double(0.9*screenSize.width)/(1.1*Double(numTiles) - 0.1)
+		if currentDimension > defaultDimension || currentDimension < 0 {  // sets max tile size
+			currentDimension = defaultDimension
+		}
+		let scaleDimension = currentDimension/defaultDimension  // is a decimal value e.g. 0.8
+		let scaledTileHeight = self.newTile.bounds.height*CGFloat(scaleDimension) // represents the new height after the original is scaled
+		
+		// sets initial xPos to match 5% padding on each side and centers the tiles
+		var xPos = Double(screenSize.width * 0.05)
+		if currentWord.count < 4{
+			xPos += Double(4 - currentWord.count)*currentDimension*1.1/2.0
+		}
+		
+		// centers a letter thats added by calculating where its center will be
+		if moveType == 0 || moveType == 2{ // is ADD or SWAP
+			let xCenter = CGFloat(xPos) + CGFloat(index)*scaledTileHeight*1.1 + CGFloat(currentDimension/2)
+			if previousMoveType != 0 && previousMoveType != 2{  // centers the letter indicator
+				changedLetterIndicator.center.x = xCenter
+			}
+			if moveType == 0{
+				newTile.center.x = xCenter
+				newTile.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+			}
+		}
+		
+		UIView.animate(withDuration: 0.7) {
+			self.newTile.alpha = 1
+			for index in 0..<self.currentWord.count{
+				let tile = self.currentWord[index]
+				tile.removeIndicator()
+				tile.transform = CGAffineTransform(scaleX: CGFloat(scaleDimension), y: CGFloat(scaleDimension))
+				tile.frame.origin = CGPoint(x: xPos, y: 0)
+				tile.center.y = self.currentWordHolderView.bounds.height/2
+				tile.setTileStyle()
+				xPos += Double(scaledTileHeight) * 1.1
+			}
+			
+			self.newTile.addIndicator()
+			
+			// Adds the slide changedLetterIndicator
+			if self.moveType == 0 || self.moveType == 2 {
+				self.changedLetterIndicator.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: 50*scaleDimension, height: 10*scaleDimension))
+				self.changedLetterIndicator.alpha = 0 // SET TO 1 TO ENABLE THE SLIDE ADD EFFECT
+				self.changedLetterIndicator.center.x = self.newTile.center.x
+				let yCenter = self.newTile.center.y + scaledTileHeight/CGFloat(2) + self.changedLetterIndicator.bounds.height
+				self.changedLetterIndicator.center.y = yCenter
+			} else {
+				if self.changedLetterIndicator.center.y < 120 {
+					self.changedLetterIndicator.center.y += 100
+					self.changedLetterIndicator.alpha = 0
+				}
+			}
+		} // END of UIView animation
+		
+		previousMoveType = moveType
+	}
+	func setTiles(to word: String) {
+		for _ in 0..<currentWord.count {
+			removeTile(index: 0)
+		}
+		currentWord = [Tile]()
+		for char in word.characters {
+			addTile(letter: String(char), index: currentWord.count)
+		}
+		
+	}
 
 }

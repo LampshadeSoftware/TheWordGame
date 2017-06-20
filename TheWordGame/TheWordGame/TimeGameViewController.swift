@@ -9,7 +9,7 @@
 import UIKit
 
 class TimeGameViewController: GameViewController {
-    
+    /*
     var startButton: UIButton!
     func startButtonPressed() {
         // Remove start button
@@ -152,5 +152,5 @@ class TimeGameViewController: GameViewController {
         self.startButton.isHidden = false
         activeGame.addPlayer("user")
     }
-    
+    */
 }

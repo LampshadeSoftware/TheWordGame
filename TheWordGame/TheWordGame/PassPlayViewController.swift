@@ -9,7 +9,7 @@
 import UIKit
 
 class PassPlayViewController: GameViewController {
-	
+	/*
 	var giveUpButton: UIButton!
 	func giveUpButtonPressed() {
 		let alert = UIAlertController(title: "Forfeit", message: "Are you sure you want to give up?", preferredStyle: .alert)
@@ -84,5 +84,5 @@ class PassPlayViewController: GameViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+	*/
 }

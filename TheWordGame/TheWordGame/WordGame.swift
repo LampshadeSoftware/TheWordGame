@@ -133,98 +133,117 @@ class WordGame: NSObject, NSCoding {
         if play == word {
             return false
         }
-        return WordGame.isValidAdd(play, on: word)
-            || WordGame.isValidSub(play, on: word)
-            || WordGame.isValidReplace(play, on: word)
-            || WordGame.isValidSwap(play, on: word)
+        return WordGame.isValidAdd(play, on: word) >= 0
+            || WordGame.isValidSub(play, on: word) >= 0
+            || WordGame.isValidReplace(play, on: word) >= 0
+            || WordGame.isValidRearrange(play, on: word)
     }
     
     /*
     Returns an error code based on the reason for invalidity
-    0: Word is invalid play on current word
-    1: Word is technically valid, but meaning did not change
-    2: Word is valid play, but not English
-    3: Word is valid play and English, but already used
-    4: Word is valid play and English and new, but it is a double play
-    5: Word is 'fjord', player can fuck off
-    6: Word is valid
+    -1: Word is invalid play on current word
+    -2: Word is technically valid, but meaning did not change
+    -3: Word is valid play, but not English
+    -4: Word is valid play and English, but already used
+    -5: Word is valid play and English and new, but it is a double play
+    -6: Word is 'fjord', player can fuck off
+    0+: Word is valid, return play type and index
+		  00-99: Addition
+		100-199: Subtraction
+		200-299: Replacement
+			300: Rearrange
     */
     func isValidPlay(_ play: String, on word: String, last: String) -> Int {
-        if WordGame.isValidAdd(play, on: word) {
-            if WordGame.addedS(play, on: word) || WordGame.addedD(play, on: word) {
-                return 1
-            }
-        }
-        else if !(WordGame.isValidSub(play, on: word)
-        || WordGame.isValidReplace(play, on: word)
-        || WordGame.isValidSwap(play, on: word)) {
-            return 0
-        }
-        if !WordGame.isEnglishWord(play) {
-            return 2
-        }
-        if play == word || alreadyUsed(play) {
-            return 3
-        }
-        if doublePlay(play, last: last) {
-            return 4
-        }
-        if play == "fjord" || play == "fiord" {
-            return 5
-        }
-        return 6
+		var potential = -1
+		
+		let validAdd = WordGame.isValidAdd(play, on: word)
+		let validSub = WordGame.isValidSub(play, on: word)
+		let validRep = WordGame.isValidReplace(play, on: word)
+		if validAdd >= 0 {
+			if WordGame.addedS(play, on: word) || WordGame.addedD(play, on: word) {
+				return -2
+			} else {
+				potential = validAdd
+			}
+		} else if validSub >= 0 {
+			potential = 100 + validSub
+		} else if validRep >= 0 {
+			potential = 200 + validRep
+		} else if WordGame.isValidRearrange(play, on: word) {
+			potential = 300
+		} else {
+			return -1
+		}
+		
+		if !WordGame.isEnglishWord(play) {
+			return -3
+		}
+		if play == word || alreadyUsed(play) {
+			return -4
+		}
+		if doublePlay(play, last: last) {
+			return -5
+		}
+		if play == "fjord" || play == "fiord" {
+			return -6
+		}
+		
+		return potential
+		
     }
-    static func isValidAdd(_ play: String, on word: String) -> Bool {
+    static func isValidAdd(_ play: String, on word: String) -> Int {
         if play.characters.count != word.characters.count + 1 {
-            return false
+            return -1
         }
         var i = 0
         while i < word.characters.count {
-            if play[getStrIndex(play, index: i)] != word[getStrIndex(word, index: i)] {
+            if play[i] != word[i] {
                 break
             }
             i += 1
         }
+		let changeAt = i
         while i+1 < play.characters.count {
-            if play[getStrIndex(play, index: i+1)] != word[getStrIndex(word, index: i)] {
-                return false
+            if play[i+1] != word[i] {
+                return -1
             }
             i += 1
         }
-        return true
+        return changeAt
     }
     
     static func addedS(_ play: String, on word: String) -> Bool {
-        return play[getLastChar(play)] == "s" && word[getLastChar(word)] != "s"
+        return play.getLastChar() == "s" && word.getLastChar() != "s"
     }
     static func addedD(_ play: String, on word: String) -> Bool {
-        return play[getLastChar(play)] == "d" && word[getLastChar(word)] == "e"
+        return play.getLastChar() == "d" && word.getLastChar() == "e"
     }
    
-    static func isValidSub(_ play: String, on word: String) -> Bool {
+    static func isValidSub(_ play: String, on word: String) -> Int {
         return isValidAdd(word, on: play)
     }
-    static func isValidReplace(_ play: String, on word: String) -> Bool {
+    static func isValidReplace(_ play: String, on word: String) -> Int {
         if play.characters.count != word.characters.count {
-            return false
+            return -1
         }
         var i = 0
         while i < play.characters.count {
-            if play[getStrIndex(play, index: i)] != word[getStrIndex(word, index: i)] {
+            if play[i] != word[i] {
                 i += 1
                 break
             }
             i += 1
         }
+		let changeAt = i - 1
         while i < word.characters.count {
-            if play[getStrIndex(play, index: i)] != word[getStrIndex(word, index: i)] {
-                return false
+            if play[i] != word[i] {
+                return -1
             }
             i += 1
         }
-        return true
+        return changeAt
     }
-    static func isValidSwap(_ play: String, on word: String) -> Bool {
+    static func isValidRearrange(_ play: String, on word: String) -> Bool {
         if play.characters.count != word.characters.count {
             return false
         }
@@ -274,45 +293,36 @@ class WordGame: NSObject, NSCoding {
         return isValidPlay(play, on: word, last: "$$$") == 6
     }
     
-    func submitWord(_ word: String) {
+    func submitWord(_ word: String) -> Int {
         let code = isValidPlay(word, on: currentWord, last: lastWord)
         switch code {
-        case 0:
+        case -1:
             errorLog = "Invalid play! Try again"
-            return
-        case 1:
+            break
+        case -2:
             errorLog = "That's crap and you know it"
-            return
-        case 2:
+            break
+        case -3:
             errorLog = "Not an English word! Try again"
-            return
-        case 3:
+            break
+        case -4:
             errorLog = "\(word) has already been played! Try again"
-            return
-        case 4:
+            break
+        case -5:
             errorLog = "Double play! Try again"
-            return
-        case 5:
+            break
+        case -6:
             errorLog = "You think you're pretty smart, huh?"
-            return
-        case 6:
+            break
+        default:
             usedWords.append(currentWord)
             lastWord = currentWord
             players[turn].addPlayedWord(word: currentWord)
 			cyclePlayers()
             currentWord = word
             errorLog = ""
-        default:
-            print("Something went wrong...")
-        }
-
-    }
-    
-    static func getStrIndex(_ str: String, index i: Int) -> String.CharacterView.Index {
-        return str.index(str.startIndex, offsetBy: i)
-    }
-    static func getLastChar(_ str: String) -> String.CharacterView.Index {
-        return str.index(before: str.endIndex)
+		}
+		return code
     }
     
     static func generateDictionary() -> [String] {

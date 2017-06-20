@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		CC1D6B9C1ED72D9200EB56FB /* TimeGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1D6B9B1ED72D9200EB56FB /* TimeGameViewController.swift */; };
 		CC1D6BA01EDE549F00EB56FB /* Save.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1D6B9F1EDE549F00EB56FB /* Save.swift */; };
+		CC38F7661EF8DA590032EB0D /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC38F7651EF8DA590032EB0D /* Tile.swift */; };
+		CC38F7681EF9C0FF0032EB0D /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC38F7671EF9C0FF0032EB0D /* StringExtension.swift */; };
 		CC3A4B2E1EB0F3F300C5E2A5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3A4B2D1EB0F3F300C5E2A5 /* AppDelegate.swift */; };
 		CC3A4B331EB0F3F300C5E2A5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC3A4B311EB0F3F300C5E2A5 /* Main.storyboard */; };
 		CC3A4B361EB0F3F300C5E2A5 /* TheWordGame.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CC3A4B341EB0F3F300C5E2A5 /* TheWordGame.xcdatamodeld */; };
@@ -51,6 +53,8 @@
 /* Begin PBXFileReference section */
 		CC1D6B9B1ED72D9200EB56FB /* TimeGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeGameViewController.swift; sourceTree = "<group>"; };
 		CC1D6B9F1EDE549F00EB56FB /* Save.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Save.swift; sourceTree = "<group>"; };
+		CC38F7651EF8DA590032EB0D /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
+		CC38F7671EF9C0FF0032EB0D /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		CC3A4B2A1EB0F3F300C5E2A5 /* TheWordGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheWordGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC3A4B2D1EB0F3F300C5E2A5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CC3A4B321EB0F3F300C5E2A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -104,6 +108,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CC38F7641EF8DA460032EB0D /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				CC38F7651EF8DA590032EB0D /* Tile.swift */,
+				CC5CCC561EF074FC007E38E0 /* WordGameUI.swift */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
 		CC3A4B211EB0F3F300C5E2A5 = {
 			isa = PBXGroup;
 			children = (
@@ -127,6 +140,7 @@
 		CC3A4B2C1EB0F3F300C5E2A5 /* TheWordGame */ = {
 			isa = PBXGroup;
 			children = (
+				CC38F7641EF8DA460032EB0D /* UI */,
 				CCA6AA941EB2762300B307D9 /* Core */,
 				CCA6AA841EB26FB600B307D9 /* ZenGameViewController.swift */,
 				CCA6AA851EB26FB600B307D9 /* PastWordCell.swift */,
@@ -172,8 +186,8 @@
 				CCA6AA8C1EB2761D00B307D9 /* WordGame.swift */,
 				CCA6AA8D1EB2761D00B307D9 /* common.txt */,
 				CCA6AA8E1EB2761D00B307D9 /* dictionary.txt */,
-				CC5CCC561EF074FC007E38E0 /* WordGameUI.swift */,
 				CCEA77551EF1DD8B0002F559 /* PlayerData.swift */,
+				CC38F7671EF9C0FF0032EB0D /* StringExtension.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -320,10 +334,12 @@
 				CC3A4B361EB0F3F300C5E2A5 /* TheWordGame.xcdatamodeld in Sources */,
 				CCA6AA901EB2761D00B307D9 /* WordGame.swift in Sources */,
 				CCA6AA871EB26FB600B307D9 /* PastWordCell.swift in Sources */,
+				CC38F7661EF8DA590032EB0D /* Tile.swift in Sources */,
 				CC1D6BA01EDE549F00EB56FB /* Save.swift in Sources */,
 				CCA6AA891EB270FB00B307D9 /* PastWordsTableView.swift in Sources */,
 				CCEA77521EF1DC760002F559 /* PlayerSetupViewController.swift in Sources */,
 				CCA6AA861EB26FB600B307D9 /* ZenGameViewController.swift in Sources */,
+				CC38F7681EF9C0FF0032EB0D /* StringExtension.swift in Sources */,
 				CC3A4B2E1EB0F3F300C5E2A5 /* AppDelegate.swift in Sources */,
 				CCEA77561EF1DD8B0002F559 /* PlayerData.swift in Sources */,
 				CCEA77581EF1E3A90002F559 /* PassPlayViewController.swift in Sources */,
