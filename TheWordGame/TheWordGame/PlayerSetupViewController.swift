@@ -10,7 +10,7 @@ import UIKit
 
 class PlayerSetupViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    static var playerList = ["Player 1", "Player 2"]
+	static var playerList: [String]!
     var playerCount = 0
     var playerListTableView: UITableView!
     var bannerView: UIView!
@@ -114,7 +114,7 @@ class PlayerSetupViewController: UIViewController, UITableViewDelegate, UITableV
         }
 		cell.setUpCell(n: indexPath.row)
         cell.input.attributedPlaceholder = NSAttributedString(string: "Player \(indexPath.row + 1)", attributes: [NSForegroundColorAttributeName: WordGameUI.blue])
-        if cell.input.text! != "" {
+        if cell.input.text!.characters.count > 0 {
             PlayerSetupViewController.playerList[indexPath.row] = cell.input.text!
         }
 		return cell

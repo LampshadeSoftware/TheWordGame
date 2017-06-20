@@ -73,7 +73,8 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         bannerView = WordGameUI.getBanner(view: view)
         view.addSubview(bannerView)
-        
+		
+		/*
         pastWordsTableView = UITableView(frame: CGRect(x:0, y:height * 0.1, width: width, height: height * 0.3), style: UITableViewStyle.plain)
         pastWordsTableView.rowHeight = 64
         pastWordsTableView.separatorStyle = .none
@@ -83,6 +84,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         pastWordsTableView.dataSource = self
         pastWordsTableView.transform = CGAffineTransform (scaleX: 1,y: -1)
         view.addSubview(pastWordsTableView)
+		*/
         
         currentWordLabel = UILabel(frame: CGRect(x: 0, y: 0, width: width * 0.9, height: height * 0.15))
         currentWordLabel.font = WordGameUI.font(size: 64)
@@ -195,7 +197,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         currentWordLabel.text = activeGame.currentWord
         updateTopLabel()
         DispatchQueue.main.async {
-            self.pastWordsTableView.reloadData()
+            // self.pastWordsTableView.reloadData()
         }
         if activeGame.usedWords.count > 0 {
             // scrollToBottom()
@@ -214,7 +216,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         if activeGame != nil {
             activeGame.usedWords = [""]
         }
-        pastWordsTableView.reloadData()
+        // pastWordsTableView.reloadData()
         activityIndicator.startAnimating()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
