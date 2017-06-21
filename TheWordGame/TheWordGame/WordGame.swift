@@ -122,7 +122,7 @@ class WordGame: NSObject, NSCoding {
     func numGamePlays(on word: String) -> Int {
         var count = 0
         for test in WordGame.dictionary {
-            if isValidPlay(test, on: word, last: lastWord) == 6 {
+            if isValidPlay(test, on: word, last: lastWord) >= 0 {
                 count+=1
             }
         }
