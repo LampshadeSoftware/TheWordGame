@@ -208,6 +208,8 @@ class GameViewController: UIViewController, UITextFieldDelegate {
 				removeTile(index: index)
 			} else if type == 2 {
 				swapTile(letter: play[index], index: index)
+			} else { // type == 3
+				rearrangeTiles(to: play)
 			}
 		}
         inputTextField.text = ""
@@ -318,6 +320,13 @@ class GameViewController: UIViewController, UITextFieldDelegate {
 		currentWordHolderView.addSubview(newTile)
 		currentWord.insert(newTile, at: index)
 		updateWordVisuals(index: index)
+	}
+	func rearrangeTiles(to word: String) {
+		if word.characters.count != currentWord.count {
+			return
+		}
+		setTiles(to: word.uppercased())
+		
 	}
 	func updateWordVisuals(index: Int){
 		currentWordHolderView.bringSubview(toFront: changedLetterIndicator)

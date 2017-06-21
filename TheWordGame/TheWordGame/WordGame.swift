@@ -244,9 +244,10 @@ class WordGame: NSObject, NSCoding {
         return changeAt
     }
     static func isValidRearrange(_ play: String, on word: String) -> Bool {
-        if play.characters.count != word.characters.count {
+        if play.characters.count != word.characters.count || word == "$$$" {
             return false
         }
+
         var letterCount = [Int](repeating: 0, count: 26)
         
         let playVals = play.unicodeScalars.filter{$0.isASCII}.map{$0.value}
@@ -290,7 +291,7 @@ class WordGame: NSObject, NSCoding {
         return usedWords.contains(play)
     }
     func doublePlay(_ play: String, last word: String) -> Bool {
-        return isValidPlay(play, on: word, last: "$$$") == 6
+        return isValidPlay(play, on: word, last: "$$$") >= 0
     }
     
     func submitWord(_ word: String) -> Int {
