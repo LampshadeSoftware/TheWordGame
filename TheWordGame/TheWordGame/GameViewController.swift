@@ -390,12 +390,17 @@ class GameViewController: UIViewController, UITextFieldDelegate {
 	}
 	
 	func setTiles(to word: String) {
-		for _ in 0..<currentWord.count {
+		moveType = 0
+		
+		for index in 0..<currentWord.count {
 			removeTile(index: 0)
 		}
-		currentWord = [Tile]()
-		for char in word.characters {
-			addTile(letter: String(char), index: currentWord.count)
+		for index in 0..<word.characters.count{
+			newTile = Tile(letter: word[index], defaultDimension: defaultDimension)
+			currentWordHolderView.addSubview(newTile)
+			currentWord.insert(newTile, at: index)
+			updateWordVisuals(index: index)
+			newTile.removeIndicator()
 		}
 		
 	}
