@@ -11,7 +11,7 @@ import Foundation
 class Save {
 
     // Static
-    private static var data = [String: NSObject]()
+    private static var data = [String: NSObject!]()
     
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("data")
@@ -35,7 +35,7 @@ class Save {
         }
     }
     
-    static func setToken(tokenKey: String, newVal: NSObject) {
+    static func setToken(tokenKey: String, newVal: NSObject!) {
         if tokenKey == "default" {
             print("Error: GameModeIdentifier was not set. Save Failed.")
             return

@@ -9,7 +9,8 @@
 import UIKit
 
 class TimeGameViewController: GameViewController {
-    /*
+	var auxLabel: UILabel!
+	
     var startButton: UIButton!
     func startButtonPressed() {
         // Remove start button
@@ -17,8 +18,8 @@ class TimeGameViewController: GameViewController {
         startButton.isHidden = true
         
         // Display countdown
-        currentWordLabel.textColor = WordGameUI.blue
-        currentWordLabel.text = "3"
+        auxLabel.textColor = WordGameUI.blue
+        auxLabel.text = "3"
         timeValue = timeLimit
         updateTimer()
         
@@ -28,11 +29,12 @@ class TimeGameViewController: GameViewController {
 
     // Time Trial Specific Functions
     func countDown() {
-        if currentWordLabel.text == "3" {
-            currentWordLabel.text = "2"
-        } else if currentWordLabel.text == "2" {
-            currentWordLabel.text = "1"
-        } else if currentWordLabel.text == "1" {
+        if auxLabel.text == "3" {
+            auxLabel.text = "2"
+        } else if auxLabel.text == "2" {
+            auxLabel.text = "1"
+        } else if auxLabel.text == "1" {
+			auxLabel.text = ""
             startGame()
             timer.invalidate()
             timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
@@ -54,8 +56,7 @@ class TimeGameViewController: GameViewController {
     func startGame() {
         gameInProgress = true
         
-        currentWordLabel.textColor = WordGameUI.yellow
-        currentWordLabel.text = activeGame.currentWord
+        setTiles(to: activeGame.currentWord)
         hintButton.isEnabled = true
         hintButton.isHidden = false
         
@@ -66,12 +67,13 @@ class TimeGameViewController: GameViewController {
     func finishGame() {
         gameInProgress = false
         
-        currentWordLabel.textColor = WordGameUI.blue
-        currentWordLabel.text = "SCORE: \(self.activeGame.usedWords.count)"
+        auxLabel.textColor = WordGameUI.blue
+        auxLabel.text = "SCORE: \(self.activeGame.usedWords.count)"
         
         // Clear game information
         inputTextField.text = ""
         logLabel.text = ""
+		clearTiles()
         
         if activeGame.usedWords.count > best {
             best = activeGame.usedWords.count
@@ -80,8 +82,7 @@ class TimeGameViewController: GameViewController {
         topLabel.text = "Best: \(best)"
         
         activeGame.usedWords = [""]
-        pastWordsTableView.reloadData()
-        
+                
         hintButton.isEnabled = false
         hintButton.isHidden = true
         
@@ -108,9 +109,15 @@ class TimeGameViewController: GameViewController {
             best = bestToken as! Int
         }
         super.viewDidLoad()
+		auxLabel = UILabel(frame: CGRect(x: 0, y: view.bounds.height * 0.4, width: view.bounds.width, height: 50))
+		auxLabel.textAlignment = .center
+		auxLabel.font = WordGameUI.font(size: 56)
+		auxLabel.textColor = WordGameUI.blue
+		view.addSubview(auxLabel)
+		
         topLabel.text = "Best: \(best)"
         startButton = UIButton(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height * 0.15))
-        startButton.center = currentWordLabel.center
+        startButton.center = auxLabel.center
         startButton.setTitle("TAP TO START", for: .normal)
         startButton.setTitleColor(WordGameUI.green, for: .normal)
         startButton.titleLabel?.font = WordGameUI.font(size: 56)
@@ -146,11 +153,11 @@ class TimeGameViewController: GameViewController {
         super.reset()
     }
     override func doAfterReset() {
-        self.currentWordLabel.text = ""
-        self.currentWordLabel.textColor = WordGameUI.yellow
+        self.setTiles(to: "")
+        self.auxLabel.text = ""
         self.startButton.isEnabled = true
         self.startButton.isHidden = false
         activeGame.addPlayer("user")
     }
-    */
+	
 }

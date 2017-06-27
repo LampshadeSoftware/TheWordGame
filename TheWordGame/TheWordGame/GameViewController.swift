@@ -176,7 +176,7 @@ class GameViewController: UIViewController, UITextFieldDelegate {
         
         if let gameToken = Save.getToken(tokenKey: gameModeIdentifier) as! WordGame? {
             activeGame = gameToken
-            // currentWordLabel.text = activeGame.currentWord
+            setTiles(to: activeGame.currentWord)
             updateTopLabel()
         } else {
             // currentWordLabel.text = ""
@@ -214,7 +214,6 @@ class GameViewController: UIViewController, UITextFieldDelegate {
 		}
         inputTextField.text = ""
         errorLog(message: activeGame.errorLog)
-        // currentWordLabel.text = activeGame.currentWord
         updateTopLabel()
         DispatchQueue.main.async {
             // self.pastWordsTableView.reloadData()
@@ -391,8 +390,7 @@ class GameViewController: UIViewController, UITextFieldDelegate {
 	
 	func setTiles(to word: String) {
 		moveType = 0
-		
-		for index in 0..<currentWord.count {
+		for _ in 0..<currentWord.count {
 			removeTile(index: 0)
 		}
 		for index in 0..<word.characters.count{
@@ -402,7 +400,9 @@ class GameViewController: UIViewController, UITextFieldDelegate {
 			updateWordVisuals(index: index)
 			newTile.removeIndicator()
 		}
-		
 	}
-
+	
+	func clearTiles() {
+		setTiles(to: "")
+	}
 }

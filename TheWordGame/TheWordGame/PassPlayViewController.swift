@@ -9,17 +9,36 @@
 import UIKit
 
 class PassPlayViewController: GameViewController {
-	/*
+	
 	var giveUpButton: UIButton!
 	func giveUpButtonPressed() {
 		let alert = UIAlertController(title: "Forfeit", message: "Are you sure you want to give up?", preferredStyle: .alert)
 		let yesAction = UIAlertAction(title: "Yes", style: .destructive) { (_) in
 			self.activeGame.playerForfeited()
+			if self.activeGame.numActivePlayers() == 1 {
+				self.clearTiles()
+				self.presentVictoryAlert(winner: self.activeGame.getCurrentPlayer().name)
+			}
 			self.updateTopLabel()
 		}
 		let noAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
 		alert.addAction(yesAction)
 		alert.addAction(noAction)
+		
+		present(alert, animated: true, completion: nil)
+	}
+	
+	func presentVictoryAlert(winner: String) {
+		let alert = UIAlertController(title: "\(winner) wins!", message: "Final word: \(activeGame.currentWord)", preferredStyle: .alert)
+		let quitAction = UIAlertAction(title: "Quit", style: .destructive) { (_) in
+			Save.setToken(tokenKey: "passPlay", newVal: nil)
+			self.backButtonPressed()
+		}
+		let againAction = UIAlertAction(title: "Play Again", style: .default) { (_) in
+			self.resetButtonPressed()
+		}
+		alert.addAction(quitAction)
+		alert.addAction(againAction)
 		
 		present(alert, animated: true, completion: nil)
 	}
@@ -84,5 +103,5 @@ class PassPlayViewController: GameViewController {
         // Pass the selected object to the new view controller.
     }
     */
-	*/
+	
 }

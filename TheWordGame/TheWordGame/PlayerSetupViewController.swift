@@ -114,9 +114,7 @@ class PlayerSetupViewController: UIViewController, UITableViewDelegate, UITableV
         }
 		cell.setUpCell(n: indexPath.row)
         cell.input.attributedPlaceholder = NSAttributedString(string: "Player \(indexPath.row + 1)", attributes: [NSForegroundColorAttributeName: WordGameUI.blue])
-        if cell.input.text!.characters.count > 0 {
-            PlayerSetupViewController.playerList[indexPath.row] = cell.input.text!
-        }
+		
 		return cell
     }
 	
@@ -143,7 +141,11 @@ class PlayerInputCell: UITableViewCell {
     }
 	
 	func textFieldDidChange() {
-		PlayerSetupViewController.playerList[n] = input.text!
+		if input.text!.characters.count > 0 {
+			PlayerSetupViewController.playerList[n] = input.text!
+		} else {
+			PlayerSetupViewController.playerList[n] = "Player \(n + 1)"
+		}
 	}
     
 	func setUpCell(n: Int) {

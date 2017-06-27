@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Zen Game View Controller-->
+        <!--Main Menu View Controller-->
         <scene sceneID="IME-J6-mvJ">
             <objects>
-                <viewController id="b5o-sW-Qww" customClass="ZenGameViewController" customModule="TheWordGame" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="b5o-sW-Qww" customClass="MainMenuViewController" customModule="TheWordGame" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YLS-Dc-cDI"/>
                         <viewControllerLayoutGuide type="bottom" id="ZKB-dF-CgC"/>

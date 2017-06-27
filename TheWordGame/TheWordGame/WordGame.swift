@@ -75,7 +75,11 @@ class WordGame: NSObject, NSCoding {
     }
     func playerForfeited() {
         players[turn].active = false
-		cyclePlayers()
+		if numActivePlayers() > 0 {
+			cyclePlayers()
+		} else {
+			// TODO: Endgame calculations
+		}
     }
     func getCurrentPlayer() -> PlayerData {
         return players[turn]
@@ -85,6 +89,15 @@ class WordGame: NSObject, NSCoding {
 		while !players[turn].active {
 			turn = (turn + 1) % players.count
 		}
+	}
+	func numActivePlayers() -> Int {
+		var count = 0
+		for player in players {
+			if player.active {
+				count += 1
+			}
+		}
+		return count
 	}
 		
     static func generateStartWord() -> String {
