@@ -75,7 +75,8 @@ class MainMenuViewController: UIViewController {
         let height = view.bounds.height
         zenPortal = UIButton(frame: CGRect(x: 0, y: height / 3, width: width, height: 50))
         zenPortal.setTitle("ZEN", for: .normal)
-        zenPortal.setTitleColor(WordGameUI.green, for: .normal)
+        zenPortal.setTitleColor(WordGameUI.dark, for: .normal)
+		zenPortal.backgroundColor = WordGameUI.green
         zenPortal.titleLabel?.font = WordGameUI.font(size: 42)
         zenPortal.titleLabel?.textAlignment = .center
         zenPortal.addTarget(self, action: #selector(zenPortalPressed), for: .touchDown)
@@ -83,7 +84,8 @@ class MainMenuViewController: UIViewController {
         
         timePortal = UIButton(frame: CGRect(x: 0, y: height / 3 + 70, width: width, height: 50))
         timePortal.setTitle("TIME TRIAL", for: .normal)
-        timePortal.setTitleColor(WordGameUI.green, for: .normal)
+        timePortal.setTitleColor(WordGameUI.dark, for: .normal)
+		timePortal.backgroundColor = WordGameUI.blue
         timePortal.titleLabel?.font = WordGameUI.font(size: 42)
         timePortal.titleLabel?.textAlignment = .center
         timePortal.addTarget(self, action: #selector(timePortalPressed), for: .touchDown)
@@ -91,7 +93,8 @@ class MainMenuViewController: UIViewController {
         
         passPlayPortal = UIButton(frame: CGRect(x: 0, y: height / 3 + 140, width: width, height: 50))
         passPlayPortal.setTitle("MULTIPLAYER", for: .normal)
-        passPlayPortal.setTitleColor(WordGameUI.green, for: .normal)
+        passPlayPortal.setTitleColor(WordGameUI.dark, for: .normal)
+		passPlayPortal.backgroundColor = WordGameUI.yellow
         passPlayPortal.titleLabel?.font = WordGameUI.font(size: 42)
         passPlayPortal.titleLabel?.textAlignment = .center
         passPlayPortal.addTarget(self, action: #selector(passPlayPortalPressed), for: .touchDown)
