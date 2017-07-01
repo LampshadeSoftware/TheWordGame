@@ -14,7 +14,8 @@ class WordGameUI {
     static let blue = UIColor(red: 181 / 256, green: 213 / 256, blue: 255 / 256, alpha: 1.0)
     static let green = UIColor(red: 134 / 256, green: 255 / 256, blue: 134 / 256, alpha: 1.0)
     static let dark = UIColor(red: 34 / 256, green: 40 / 256, blue: 47 / 256, alpha: 1.0)
-    
+	static let lightDark = UIColor(red: 34 * 1.5 / 256, green: 40 * 1.5 / 256, blue: 47 * 1.5 / 256, alpha: 1.0)
+	
     static func font(size: Int) -> UIFont {
         return UIFont(name: "GillSans-Light", size: CGFloat(size))!
     }

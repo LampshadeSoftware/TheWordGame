@@ -12,10 +12,10 @@ class GameViewController: UIViewController, UITextFieldDelegate {
     
     // UI Elements
     var bannerView: UIView!
-    
-    var pastWordsTableView: UITableView!
-    
+	
     var topLabel: UILabel!
+
+	var prevWord: UILabel!
 	
     var logLabel: UILabel!
     func errorLog(message: String) {
@@ -74,26 +74,13 @@ class GameViewController: UIViewController, UITextFieldDelegate {
         bannerView = WordGameUI.getBanner(view: view)
         view.addSubview(bannerView)
 		
-		/*
-        pastWordsTableView = UITableView(frame: CGRect(x:0, y:height * 0.1, width: width, height: height * 0.3), style: UITableViewStyle.plain)
-        pastWordsTableView.rowHeight = 64
-        pastWordsTableView.separatorStyle = .none
-        pastWordsTableView.backgroundColor = WordGameUI.dark
-        pastWordsTableView.register(PastWordCell.self, forCellReuseIdentifier: "PastWordCell")
-        pastWordsTableView.delegate = self
-        pastWordsTableView.dataSource = self
-        pastWordsTableView.transform = CGAffineTransform (scaleX: 1,y: -1)
-        view.addSubview(pastWordsTableView)
-		
-		*/
-        
-        inputTextField = UITextField(frame: CGRect(x: 0, y: 0, width: width * 0.95, height: 30))
-        inputTextField.borderStyle = .roundedRect
+        inputTextField = UITextField(frame: CGRect(x: 0, y: height * 0.55, width: width, height: 40))
+        inputTextField.borderStyle = .none
         inputTextField.backgroundColor = .white
         inputTextField.textAlignment = .center
         inputTextField.keyboardAppearance = .dark
         inputTextField.font = WordGameUI.font(size: 17)
-        inputTextField.center = CGPoint(x: width / 2, y: height * 0.58)
+        // inputTextField.center = CGPoint(x: width / 2, y: height * 0.58)
         inputTextField.autocorrectionType = .no
         inputTextField.spellCheckingType = .no
         inputTextField.autocapitalizationType = .none
@@ -103,18 +90,20 @@ class GameViewController: UIViewController, UITextFieldDelegate {
         inputTextField.becomeFirstResponder()
         view.addSubview(inputTextField)
         
-        submitButton = UIButton(frame: CGRect(x: 0, y: 0, width: 56, height: 30))
-        submitButton.center = CGPoint(x: width - 135, y: height * 0.64)
+        submitButton = UIButton(frame: CGRect(x: width / 2, y: height * 0.55 + 40, width: width / 2, height: 45))
+        // submitButton.center = CGPoint(x: width - 135, y: height * 0.64)
         submitButton.setTitle("SUBMIT", for: .normal)
-        submitButton.setTitleColor(WordGameUI.blue, for: .normal)
+        submitButton.setTitleColor(WordGameUI.dark, for: .normal)
+		submitButton.backgroundColor = WordGameUI.blue
         submitButton.titleLabel?.font = WordGameUI.font(size: 17)
         submitButton.addTarget(self, action: #selector(submitButtonPressed), for: .touchDown)
         view.addSubview(submitButton)
         
-        hintButton = UIButton(frame: CGRect(x: 0, y: 0, width: 56, height: 30))
-        hintButton.center = CGPoint(x: 135, y: height * 0.64)
+        hintButton = UIButton(frame: CGRect(x: 0, y: height * 0.55 + 40, width: width / 2, height: 45))
+        // hintButton.center = CGPoint(x: 135, y: height * 0.64)
         hintButton.setTitle("HINT", for: .normal)
-        hintButton.setTitleColor(WordGameUI.green, for: .normal)
+        hintButton.setTitleColor(WordGameUI.dark, for: .normal)
+		hintButton.backgroundColor = WordGameUI.green
         hintButton.titleLabel?.font = WordGameUI.font(size: 17)
         hintButton.addTarget(self, action: #selector(hintButtonPressed), for: .touchDown)
         view.addSubview(hintButton)
@@ -141,6 +130,15 @@ class GameViewController: UIViewController, UITextFieldDelegate {
         backButton.titleLabel?.font = WordGameUI.font(size: 20)
         backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchDown)
         bannerView.addSubview(backButton)
+		
+		prevWord = UILabel(frame: CGRect(x: 0, y: height * 0.1, width: width, height: height * 0.075))
+		prevWord.font = WordGameUI.font(size: 20)
+		prevWord.text = "LAST WORD: "
+		prevWord.textAlignment = .center
+		prevWord.backgroundColor = WordGameUI.lightDark
+		prevWord.textColor = WordGameUI.blue
+		view.addSubview(prevWord)
+		
         
         logLabel = UILabel(frame: CGRect(x: 0, y: height * 0.51, width: width, height: 22))
         logLabel.textAlignment = .center
@@ -157,7 +155,8 @@ class GameViewController: UIViewController, UITextFieldDelegate {
 		currentWordHolderView = UIView(frame: CGRect(x: 0, y: height * 0.33, width: width, height: 80))
 		
 		changedLetterIndicator = UIView(frame: CGRect(x: 0, y: 85, width: 40, height: 10))
-		changedLetterIndicator.backgroundColor = UIColor(red:0.94, green:0.56, blue:0.23, alpha:1.0)
+		// changedLetterIndicator.backgroundColor = UIColor(red:0.94, green:0.56, blue:0.23, alpha:1.0)
+		changedLetterIndicator.backgroundColor = WordGameUI.blue
 		changedLetterIndicator.alpha = 0
 		currentWordHolderView.addSubview(changedLetterIndicator)
 		view.addSubview(currentWordHolderView)
@@ -178,6 +177,7 @@ class GameViewController: UIViewController, UITextFieldDelegate {
             activeGame = gameToken
             setTiles(to: activeGame.currentWord)
             updateTopLabel()
+			prevWord.text = "LAST WORD: \(activeGame.lastWord.uppercased())"
         } else {
             // currentWordLabel.text = ""
         }
@@ -215,6 +215,7 @@ class GameViewController: UIViewController, UITextFieldDelegate {
         inputTextField.text = ""
         errorLog(message: activeGame.errorLog)
         updateTopLabel()
+		prevWord.text = "LAST WORD: \(activeGame.lastWord.uppercased())"
         DispatchQueue.main.async {
             // self.pastWordsTableView.reloadData()
         }
@@ -254,18 +255,6 @@ class GameViewController: UIViewController, UITextFieldDelegate {
 		setTiles(to: activeGame.currentWord)
     }
 
-    func preScroll() {
-        DispatchQueue.global(qos: .background).async {
-            let indexPath = IndexPath(row: 1, section: 0)
-            self.pastWordsTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
-        }
-    }
-    func scrollToBottom() {
-        DispatchQueue.global(qos: .background).async {
-            let indexPath = IndexPath(row: 0, section: 0)
-            self.pastWordsTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-        }
-    }
 	
 	// New UI Stuff
 	var screenSize: CGRect!

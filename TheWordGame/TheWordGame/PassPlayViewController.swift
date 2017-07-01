@@ -46,16 +46,20 @@ class PassPlayViewController: GameViewController {
     override func viewDidLoad() {
         gameModeIdentifier = "passPlay"
         super.viewDidLoad()
-        self.hintButton.center = CGPoint(x: view.bounds.width / 2, y: view.bounds.height * 0.64)
-		self.submitButton.center = CGPoint(x: view.bounds.width - 90, y: view.bounds.height * 0.64)
+		let width = view.bounds.width
+		let height = view.bounds.height
 		
-		giveUpButton = UIButton(frame: CGRect(x: 0, y: 0, width: 70, height: 30))
-		giveUpButton.center = CGPoint(x: 90, y: view.bounds.height * 0.64)
+		giveUpButton = UIButton(frame: CGRect(x: 0, y: height * 0.55 + 40, width: width / 3, height: 45))
 		giveUpButton.setTitle("FORFEIT", for: .normal)
-		giveUpButton.setTitleColor(WordGameUI.red, for: .normal)
+		giveUpButton.backgroundColor = WordGameUI.red
+		giveUpButton.setTitleColor(WordGameUI.dark, for: .normal)
 		giveUpButton.titleLabel?.font = WordGameUI.font(size: 17)
 		giveUpButton.addTarget(self, action: #selector(giveUpButtonPressed), for: .touchDown)
 		view.addSubview(giveUpButton)
+		
+		hintButton.frame = CGRect(x: width / 3.0, y: height * 0.55 + 40, width: width / 3, height: 45)
+		submitButton.frame = CGRect(x: 2 * width / 3.0, y: height * 0.55 + 40, width: width / 3, height: 45)
+		
         // Do any additional setup after loading the view.
     }
 

@@ -40,9 +40,9 @@ class Tile: UIView{
         super.init(frame: CGRect())
         
         self.frame.size = CGSize(width: defaultDimension, height: defaultDimension)
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOpacity = 0.3
-        self.layer.shadowRadius = 5
+        // self.layer.shadowColor = UIColor.black.cgColor
+        // self.layer.shadowOpacity = 0.3
+        // self.layer.shadowRadius = 5
         self.backgroundColor = .white
         self.layer.cornerRadius = 15
         self.alpha = 0
@@ -54,7 +54,8 @@ class Tile: UIView{
         changedLetterIndicator.frame = CGRect(origin: CGPoint(x: 0, y: self.bounds.height), size: CGSize(width: 50, height: 10))
         changedLetterIndicator.alpha = 0
         changedLetterIndicator.center.x = self.bounds.width/2
-        changedLetterIndicator.backgroundColor = UIColor(red:0.94, green:0.56, blue:0.23, alpha:1.0)
+        // changedLetterIndicator.backgroundColor = UIColor(red:0.94, green:0.56, blue:0.23, alpha:1.0)
+		changedLetterIndicator.backgroundColor = WordGameUI.yellow
         self.addSubview(changedLetterIndicator)
     }
     
