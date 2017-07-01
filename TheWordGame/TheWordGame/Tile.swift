@@ -43,12 +43,12 @@ class Tile: UIView{
         // self.layer.shadowColor = UIColor.black.cgColor
         // self.layer.shadowOpacity = 0.3
         // self.layer.shadowRadius = 5
-        self.backgroundColor = .white
+        self.backgroundColor = WordGameUI.lightDark
         self.layer.cornerRadius = 15
         self.alpha = 0
         
         label.frame.size = CGSize(width: defaultDimension, height: defaultDimension)
-        label.textColor = .gray
+        label.textColor = .white
         label.textAlignment = .center
         
         changedLetterIndicator.frame = CGRect(origin: CGPoint(x: 0, y: self.bounds.height), size: CGSize(width: 50, height: 10))
