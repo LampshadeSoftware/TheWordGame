@@ -28,8 +28,9 @@ class PlayerSetupViewController: UIViewController, UITableViewDelegate, UITableV
         let alert = UIAlertController(title: "How many players?", message: "", preferredStyle: .alert)
         let actionInput = UIAlertAction(title: "Go", style: .default) { (_) in
             let field = alert.textFields![0]
-            if field.text != "" && Int(field.text!)! > 1 {
-                self.playerCount = Int(field.text!)!
+			let fieldAsNum = Int(field.text!)
+            if fieldAsNum != nil && fieldAsNum! > 1 && fieldAsNum! < 25 {
+                self.playerCount = fieldAsNum!
                 PlayerSetupViewController.playerList = [String]()
                 for i in 1...self.playerCount {
                     PlayerSetupViewController.playerList.append("Player \(i)")
@@ -59,6 +60,13 @@ class PlayerSetupViewController: UIViewController, UITableViewDelegate, UITableV
 		view.backgroundColor = WordGameUI.dark
         bannerView = WordGameUI.getBanner(view: view)
         view.addSubview(bannerView)
+		
+		let infoLabel = UILabel(frame: CGRect(x: 0, y: 0, width: bannerView.bounds.width, height: bannerView.bounds.height))
+		infoLabel.font = WordGameUI.font(size: 20)
+		infoLabel.textColor = WordGameUI.dark
+		infoLabel.textAlignment = .center
+		infoLabel.text = "ENTER NAMES"
+		bannerView.addSubview(infoLabel)
         
         playerListTableView = UITableView(frame: CGRect(x:0, y: view.bounds.height * 0.1, width: view.bounds.width, height: view.bounds.height * 0.9), style: UITableViewStyle.plain)
         playerListTableView.rowHeight = 64
@@ -154,6 +162,8 @@ class PlayerInputCell: UITableViewCell {
         input.font = WordGameUI.font(size: 24)
         input.textColor = WordGameUI.yellow
         input.tintColor = WordGameUI.blue
+		input.keyboardAppearance = .dark
+		input.autocorrectionType = .no
 		input.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         contentView.backgroundColor = WordGameUI.dark
         contentView.addSubview(input)

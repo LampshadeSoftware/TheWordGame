@@ -16,7 +16,6 @@ class PassPlayViewController: GameViewController {
 		let yesAction = UIAlertAction(title: "Yes", style: .destructive) { (_) in
 			self.activeGame.playerForfeited()
 			if self.activeGame.numActivePlayers() == 1 {
-				self.clearTiles()
 				self.presentVictoryAlert(winner: self.activeGame.getCurrentPlayer().name)
 			}
 			self.updateTopLabel()

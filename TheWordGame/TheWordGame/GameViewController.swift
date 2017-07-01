@@ -80,7 +80,6 @@ class GameViewController: UIViewController, UITextFieldDelegate {
         inputTextField.textAlignment = .center
         inputTextField.keyboardAppearance = .dark
         inputTextField.font = WordGameUI.font(size: 17)
-        // inputTextField.center = CGPoint(x: width / 2, y: height * 0.58)
         inputTextField.autocorrectionType = .no
         inputTextField.spellCheckingType = .no
         inputTextField.autocapitalizationType = .none
@@ -91,7 +90,6 @@ class GameViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(inputTextField)
         
         submitButton = UIButton(frame: CGRect(x: width / 2, y: height * 0.55 + 40, width: width / 2, height: 45))
-        // submitButton.center = CGPoint(x: width - 135, y: height * 0.64)
         submitButton.setTitle("SUBMIT", for: .normal)
         submitButton.setTitleColor(WordGameUI.dark, for: .normal)
 		submitButton.backgroundColor = WordGameUI.blue
@@ -100,7 +98,6 @@ class GameViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(submitButton)
         
         hintButton = UIButton(frame: CGRect(x: 0, y: height * 0.55 + 40, width: width / 2, height: 45))
-        // hintButton.center = CGPoint(x: 135, y: height * 0.64)
         hintButton.setTitle("HINT", for: .normal)
         hintButton.setTitleColor(WordGameUI.dark, for: .normal)
 		hintButton.backgroundColor = WordGameUI.green
@@ -133,7 +130,7 @@ class GameViewController: UIViewController, UITextFieldDelegate {
 		
 		prevWord = UILabel(frame: CGRect(x: 0, y: height * 0.1, width: width, height: height * 0.075))
 		prevWord.font = WordGameUI.font(size: 20)
-		prevWord.text = "LAST WORD: "
+		prevWord.text = "LAST WORD"
 		prevWord.textAlignment = .center
 		prevWord.backgroundColor = WordGameUI.lightDark
 		prevWord.textColor = WordGameUI.blue
@@ -177,7 +174,7 @@ class GameViewController: UIViewController, UITextFieldDelegate {
             activeGame = gameToken
             setTiles(to: activeGame.currentWord)
             updateTopLabel()
-			prevWord.text = "LAST WORD: \(activeGame.lastWord.uppercased())"
+			prevWord.text = (activeGame.lastWord.uppercased())
         } else {
             // currentWordLabel.text = ""
         }
@@ -215,7 +212,7 @@ class GameViewController: UIViewController, UITextFieldDelegate {
         inputTextField.text = ""
         errorLog(message: activeGame.errorLog)
         updateTopLabel()
-		prevWord.text = "LAST WORD: \(activeGame.lastWord.uppercased())"
+		prevWord.text = activeGame.lastWord.uppercased()
         DispatchQueue.main.async {
             // self.pastWordsTableView.reloadData()
         }

@@ -19,6 +19,7 @@ class WordGameUI {
     static func font(size: Int) -> UIFont {
         return UIFont(name: "GillSans-Light", size: CGFloat(size))!
     }
+	
     
     static func getBanner(view: UIView) -> UIView {
         let width = view.bounds.width
