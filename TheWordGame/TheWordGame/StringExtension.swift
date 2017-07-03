@@ -27,4 +27,8 @@ extension String {
 	func getLastChar() -> String {
 		return self[characters.count - 1] as String
 	}
+	
+	var isAlpha: Bool {
+		return !isEmpty && range(of: "[^a-zA-Z]", options: .regularExpression) == nil
+	}
 }

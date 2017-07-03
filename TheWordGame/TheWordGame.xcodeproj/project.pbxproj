@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC1009AF1F099C0F0023814D /* InstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1009AE1F099C0F0023814D /* InstructionsViewController.swift */; };
 		CC1D6B9C1ED72D9200EB56FB /* TimeGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1D6B9B1ED72D9200EB56FB /* TimeGameViewController.swift */; };
 		CC1D6BA01EDE549F00EB56FB /* Save.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1D6B9F1EDE549F00EB56FB /* Save.swift */; };
 		CC38F7661EF8DA590032EB0D /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC38F7651EF8DA590032EB0D /* Tile.swift */; };
@@ -51,6 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CC1009AE1F099C0F0023814D /* InstructionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsViewController.swift; sourceTree = "<group>"; };
 		CC1D6B9B1ED72D9200EB56FB /* TimeGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeGameViewController.swift; sourceTree = "<group>"; };
 		CC1D6B9F1EDE549F00EB56FB /* Save.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Save.swift; sourceTree = "<group>"; };
 		CC38F7651EF8DA590032EB0D /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				CC3A4B391EB0F3F300C5E2A5 /* LaunchScreen.storyboard */,
 				CC3A4B3C1EB0F3F300C5E2A5 /* Info.plist */,
 				CC3A4B341EB0F3F300C5E2A5 /* TheWordGame.xcdatamodeld */,
+				CC1009AE1F099C0F0023814D /* InstructionsViewController.swift */,
 				CCA6AA881EB270FB00B307D9 /* PastWordsTableView.swift */,
 				CC1D6B9B1ED72D9200EB56FB /* TimeGameViewController.swift */,
 				CCA6402F1EE0A1D0009EC2AE /* StatsViewController.swift */,
@@ -343,6 +346,7 @@
 				CC3A4B2E1EB0F3F300C5E2A5 /* AppDelegate.swift in Sources */,
 				CCEA77561EF1DD8B0002F559 /* PlayerData.swift in Sources */,
 				CCEA77581EF1E3A90002F559 /* PassPlayViewController.swift in Sources */,
+				CC1009AF1F099C0F0023814D /* InstructionsViewController.swift in Sources */,
 				CCA640301EE0A1D0009EC2AE /* StatsViewController.swift in Sources */,
 				CCEA77501EF0E1AB0002F559 /* MainMenuViewController.swift in Sources */,
 				CC5CCC571EF074FC007E38E0 /* WordGameUI.swift in Sources */,

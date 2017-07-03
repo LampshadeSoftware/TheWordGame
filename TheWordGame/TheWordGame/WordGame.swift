@@ -143,7 +143,7 @@ class WordGame: NSObject, NSCoding {
     }
     
     static func isValidPlayLite(_ play: String, on word: String) -> Bool {
-        if play == word {
+        if play == word || !play.isAlpha {
             return false
         }
         return WordGame.isValidAdd(play, on: word) >= 0
@@ -167,6 +167,9 @@ class WordGame: NSObject, NSCoding {
 			300: Rearrange
     */
     func isValidPlay(_ play: String, on word: String, last: String) -> Int {
+		if !play.isAlpha {
+			return -1
+		}
 		var potential = -1
 		
 		let validAdd = WordGame.isValidAdd(play, on: word)
@@ -257,7 +260,7 @@ class WordGame: NSObject, NSCoding {
         return changeAt
     }
     static func isValidRearrange(_ play: String, on word: String) -> Bool {
-        if play.characters.count != word.characters.count || word == "$$$" {
+        if play.characters.count != word.characters.count {
             return false
         }
 
@@ -304,7 +307,7 @@ class WordGame: NSObject, NSCoding {
         return usedWords.contains(play)
     }
     func doublePlay(_ play: String, last word: String) -> Bool {
-        return isValidPlay(play, on: word, last: "$$$") >= 0
+        return WordGame.isValidPlayLite(play, on: word)
     }
     
     func submitWord(_ word: String) -> Int {
@@ -314,7 +317,7 @@ class WordGame: NSObject, NSCoding {
             errorLog = "Invalid play! Try again"
             break
         case -2:
-            errorLog = "That's crap and you know it"
+            errorLog = "You must change the meaning of the word!"
             break
         case -3:
             errorLog = "Not an English word! Try again"

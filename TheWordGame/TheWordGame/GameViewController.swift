@@ -61,7 +61,12 @@ class GameViewController: UIViewController, UITextFieldDelegate {
     }
     var backButton: UIButton!
     func backButtonPressed() {
-        present(MainMenuViewController(), animated: true, completion: nil)
+		let transition = CATransition()
+		transition.duration = 0.3
+		transition.type = kCATransitionPush
+		transition.subtype = kCATransitionFromLeft
+		view.window!.layer.add(transition, forKey: kCATransition)
+        present(MainMenuViewController(), animated: false, completion: nil)
     }
     
     func setUpUI() {
@@ -175,6 +180,9 @@ class GameViewController: UIViewController, UITextFieldDelegate {
             setTiles(to: activeGame.currentWord)
             updateTopLabel()
 			prevWord.text = (activeGame.lastWord.uppercased())
+			if prevWord.text == "" {
+				prevWord.text = "LAST WORD"
+			}
         } else {
             // currentWordLabel.text = ""
         }
@@ -213,6 +221,9 @@ class GameViewController: UIViewController, UITextFieldDelegate {
         errorLog(message: activeGame.errorLog)
         updateTopLabel()
 		prevWord.text = activeGame.lastWord.uppercased()
+		if prevWord.text == "" {
+			prevWord.text = "LAST WORD"
+		}
         DispatchQueue.main.async {
             // self.pastWordsTableView.reloadData()
         }

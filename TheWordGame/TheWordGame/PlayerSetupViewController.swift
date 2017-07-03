@@ -16,12 +16,22 @@ class PlayerSetupViewController: UIViewController, UITableViewDelegate, UITableV
     var bannerView: UIView!
     
     func backButtonPressed() {
-        present(MainMenuViewController(), animated: true, completion: nil)
+		let transition = CATransition()
+		transition.duration = 0.3
+		transition.type = kCATransitionPush
+		transition.subtype = kCATransitionFromLeft
+		view.window!.layer.add(transition, forKey: kCATransition)
+        present(MainMenuViewController(), animated: false, completion: nil)
     }
 	
 	var startButton: UIButton!
 	func startButtonPressed() {
-		present(PassPlayViewController(), animated: true, completion: nil)
+		let transition = CATransition()
+		transition.duration = 0.3
+		transition.type = kCATransitionPush
+		transition.subtype = kCATransitionFromRight
+		view.window!.layer.add(transition, forKey: kCATransition)
+		present(PassPlayViewController(), animated: false, completion: nil)
 	}
     
     func presentAlert() {
@@ -73,7 +83,7 @@ class PlayerSetupViewController: UIViewController, UITableViewDelegate, UITableV
         playerListTableView.separatorStyle = .singleLine
         playerListTableView.separatorInset = .zero
         playerListTableView.separatorColor = WordGameUI.blue
-        playerListTableView.backgroundColor = .black
+        playerListTableView.backgroundColor = WordGameUI.dark
         playerListTableView.allowsSelection = false
         playerListTableView.register(PlayerInputCell.self, forCellReuseIdentifier: "PlayerInputCell")
         playerListTableView.delegate = self
@@ -157,6 +167,9 @@ class PlayerInputCell: UITableViewCell {
 	}
     
 	func setUpCell(n: Int) {
+		if self.n != nil {
+			return
+		}
 		self.n = n
         input = UITextField(frame: CGRect(x: 20, y: 0, width: contentView.bounds.width, height: contentView.bounds.height))
         input.font = WordGameUI.font(size: 24)
@@ -165,7 +178,7 @@ class PlayerInputCell: UITableViewCell {
 		input.keyboardAppearance = .dark
 		input.autocorrectionType = .no
 		input.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        contentView.backgroundColor = WordGameUI.dark
+        contentView.backgroundColor = WordGameUI.lightDark
         contentView.addSubview(input)
         
     }
