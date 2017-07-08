@@ -84,6 +84,7 @@ class GameViewController: UIViewController, UITextFieldDelegate {
         inputTextField.backgroundColor = .white
         inputTextField.textAlignment = .center
         inputTextField.keyboardAppearance = .dark
+		inputTextField.keyboardType = .default
         inputTextField.font = WordGameUI.font(size: 17)
         inputTextField.autocorrectionType = .no
         inputTextField.spellCheckingType = .no

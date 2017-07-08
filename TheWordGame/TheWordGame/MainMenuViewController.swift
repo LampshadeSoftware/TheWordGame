@@ -76,6 +76,15 @@ class MainMenuViewController: UIViewController {
 		view.window!.layer.add(transition, forKey: kCATransition)
 		present(vc, animated: false, completion: nil)
 	}
+	func instructionsPortalTouched() {
+		instructionsPortal.backgroundColor = .white
+		instructionsPortal.setTitleColor(WordGameUI.dark, for: .normal)
+	}
+	func instructionsPortalTouchLeft() {
+		instructionsPortal.backgroundColor = WordGameUI.lightDark
+		instructionsPortal.setTitleColor(.white, for: .normal)
+	}
+	
     var resetButton: UIButton!
     func resetButtonPressed() {
         let alert = UIAlertController(title: "Reset", message: "Are you sure you want to reset all saved data?", preferredStyle: .alert)
@@ -140,7 +149,6 @@ class MainMenuViewController: UIViewController {
         timePortal.titleLabel?.font = WordGameUI.font(size: 42)
         timePortal.titleLabel?.textAlignment = .center
         timePortal.addTarget(self, action: #selector(timePortalPressed), for: .touchUpInside)
-		timePortal.addTarget(self, action: #selector(timePortalPressed), for: .touchUpInside)
 		timePortal.addTarget(self, action: #selector(timePortalTouched), for: .touchDown)
 		timePortal.addTarget(self, action: #selector(timePortalTouchLeft), for: .touchDragExit)
 		timePortal.addTarget(self, action: #selector(timePortalTouched), for: .touchDragEnter)
@@ -153,7 +161,6 @@ class MainMenuViewController: UIViewController {
         passPlayPortal.titleLabel?.font = WordGameUI.font(size: 42)
         passPlayPortal.titleLabel?.textAlignment = .center
         passPlayPortal.addTarget(self, action: #selector(passPlayPortalPressed), for: .touchUpInside)
-		passPlayPortal.addTarget(self, action: #selector(passPlayPortalPressed), for: .touchUpInside)
 		passPlayPortal.addTarget(self, action: #selector(passPlayPortalTouched), for: .touchDown)
 		passPlayPortal.addTarget(self, action: #selector(passPlayPortalTouchLeft), for: .touchDragExit)
 		passPlayPortal.addTarget(self, action: #selector(passPlayPortalTouched), for: .touchDragEnter)
@@ -166,6 +173,10 @@ class MainMenuViewController: UIViewController {
 		instructionsPortal.titleLabel?.font = WordGameUI.font(size: 42)
 		instructionsPortal.titleLabel?.textAlignment = .center
 		instructionsPortal.addTarget(self, action: #selector(instructionsPortalPressed), for: .touchUpInside)
+		instructionsPortal.addTarget(self, action: #selector(instructionsPortalTouched), for: .touchDown)
+		instructionsPortal.addTarget(self, action: #selector(instructionsPortalTouchLeft), for: .touchDragExit)
+		instructionsPortal.addTarget(self, action: #selector(instructionsPortalTouched), for: .touchDragEnter)
+
 		view.addSubview(instructionsPortal)
 		
         resetButton = UIButton(frame: CGRect(x: 0, y: height - 50, width: 100, height: 50))

@@ -311,7 +311,8 @@ class WordGame: NSObject, NSCoding {
     }
     
     func submitWord(_ word: String) -> Int {
-        let code = isValidPlay(word, on: currentWord, last: lastWord)
+		let wordLower = word.lowercased()
+        let code = isValidPlay(wordLower, on: currentWord, last: lastWord)
         switch code {
         case -1:
             errorLog = "Invalid play! Try again"
@@ -336,7 +337,7 @@ class WordGame: NSObject, NSCoding {
             lastWord = currentWord
             players[turn].addPlayedWord(word: currentWord)
 			cyclePlayers()
-            currentWord = word
+            currentWord = wordLower
             errorLog = ""
 		}
 		return code
