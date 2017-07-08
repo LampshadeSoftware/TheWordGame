@@ -262,6 +262,7 @@ class GameViewController: UIViewController, UITextFieldDelegate {
         resetTopLabel()
         // self.currentWordLabel.text = self.activeGame.currentWord
 		setTiles(to: activeGame.currentWord)
+		prevWord.text = "LAST WORD"
     }
 
 	
