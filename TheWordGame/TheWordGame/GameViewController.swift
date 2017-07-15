@@ -127,8 +127,9 @@ class GameViewController: UIViewController, UITextFieldDelegate {
         resetButton.addTarget(self, action: #selector(resetButtonPressed), for: .touchDown)
         bannerView.addSubview(resetButton)
         
-        backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: bannerView.bounds.height))
-        backButton.setTitle("BACK", for: .normal)
+        backButton = UIButton(frame: CGRect(x: 0, y: 0, width: bannerView.bounds.height, height: bannerView.bounds.height))
+        // backButton.setTitle("BACK", for: .normal)
+		backButton.setImage(#imageLiteral(resourceName: "back"), for: .normal)
         backButton.setTitleColor(WordGameUI.dark, for: .normal)
         backButton.titleLabel?.font = WordGameUI.font(size: 20)
         backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchDown)
@@ -241,11 +242,9 @@ class GameViewController: UIViewController, UITextFieldDelegate {
     func reset() {
         inputTextField.text = ""
         logLabel.text = ""
-        // currentWordLabel.text = ""
         if activeGame != nil {
             activeGame.usedWords = [""]
         }
-        // pastWordsTableView.reloadData()
         activityIndicator.startAnimating()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {

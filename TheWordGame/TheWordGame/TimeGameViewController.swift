@@ -26,7 +26,7 @@ class TimeGameViewController: GameViewController {
         // Start timer
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countDown), userInfo: nil, repeats: true)
     }
-
+	
     // Time Trial Specific Functions
     func countDown() {
         if auxLabel.text == "3" {
@@ -153,11 +153,18 @@ class TimeGameViewController: GameViewController {
         super.reset()
     }
     override func doAfterReset() {
-        self.setTiles(to: "")
+        self.clearTiles()
+		self.inputTextField.text = ""
         self.auxLabel.text = ""
         self.startButton.isEnabled = true
         self.startButton.isHidden = false
         activeGame.addPlayer("user")
+		hintButton.isEnabled = false
+		hintButton.isHidden = true
+		
+		submitButton.isEnabled = false
+		submitButton.isHidden = true
+		
     }
 	
 }
